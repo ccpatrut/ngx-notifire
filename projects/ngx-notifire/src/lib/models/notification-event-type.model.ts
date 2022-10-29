@@ -1,4 +1,4 @@
-export enum NotificationEventTypeType {
+export enum NotificationEventType {
   BEFORE_SHOW = 'beforeShow',
   SHOWN = 'shown',
   INPUT = 'input',
