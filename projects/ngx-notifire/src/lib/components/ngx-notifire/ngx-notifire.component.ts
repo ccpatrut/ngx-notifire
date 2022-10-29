@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'lib-ngx-notifire',
-  template: ` <p>ngx-notifire works!2</p> `,
-  styles: [],
+  templateUrl: './ngx-notifire.component.html',
+  styleUrls: ['./ngx-notifire.component.css'],
 })
 export class NgxNotifireComponent implements OnInit {
   constructor() {}
