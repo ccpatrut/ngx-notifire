@@ -4,22 +4,22 @@ import { NotificationType } from './notification-type.model';
 
 export class NotificationModel {
   constructor(
-    public readonly type: NotificationType,
+    public type?: NotificationType,
     /**
      * Notification Title
      */
-    public readonly title: string,
+    public title?: string,
     /**
      * Notification message
      */
-    public readonly body: string,
+    public body?: string,
     /**
      * Config object
      */
-    public readonly config: NotificationConfig,
+    public config?: NotificationConfig,
     /**
      * Html content
      */
-    public readonly html?: string | SafeHtml
+    public html?: string | SafeHtml
   ) {}
 }

@@ -1,4 +1,5 @@
 export enum NotificationEventType {
+  MOUNTED = 'mounted',
   BEFORE_SHOW = 'beforeShow',
   SHOWN = 'shown',
   INPUT = 'input',

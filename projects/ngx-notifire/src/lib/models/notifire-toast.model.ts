@@ -6,7 +6,7 @@ import { NotificationType } from './notification-type.model';
 /**
  * Toast main model
  */
-export class ToastNotifire {
+export class NotifireToast {
   /**
    * Emits SnotifyEventType
    */
@@ -26,9 +26,9 @@ export class ToastNotifire {
     public id: number,
     public title: string,
     public body: string,
-    public config: NotificationConfig
+    public config?: NotificationConfig
   ) {
-    if (this.config.type === NotificationType.PROMPT) {
+    if (this.config && this.config.type === NotificationType.PROMPT) {
       this.value = '';
     }
     this.on(NotificationEventType.HIDDEN, () => {
@@ -59,7 +59,7 @@ export class ToastNotifire {
    * @returns boolean true then equals else false.
    * @param toast SnotifyToast
    */
-  equals(toast: ToastNotifire): boolean {
+  equals(toast: NotifireToast): boolean {
     return (
       this.body === toast.body &&
       this.title === toast.title &&

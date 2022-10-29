@@ -9,7 +9,7 @@ export interface NotificationConfig {
    * Notification timeout in milliseconds.
    * Disable timeout = 0
    */
-  timeout: number;
+  timeout?: number;
 
   /**
    * Enable/Disable progress bar.
