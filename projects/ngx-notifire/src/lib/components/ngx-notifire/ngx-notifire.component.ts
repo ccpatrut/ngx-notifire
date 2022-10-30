@@ -1,5 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
+import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { NotificationEventType, NotificationPositionType } from '../../models';
 import { NotifireNotifications } from '../../models/notifire-notifications.interface';
 import { NotifireToast } from '../../models/notifire-toast.model';
@@ -10,7 +16,7 @@ import { NotificationService } from '../../services';
   templateUrl: './ngx-notifire.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxNotifireComponent implements OnInit, OnDestroy {
+export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly unsubscribe$ = new Subject<void>();
   /**
    * Toasts array
@@ -39,9 +45,14 @@ export class NgxNotifireComponent implements OnInit, OnDestroy {
   /**
    * Backdrop Opacity
    */
-  backdrop = -1;
+  backdrop: number | undefined = -1;
+  /**
+   * How many toasts with backdrop in current queue
+   */
+  withBackdrop: NotifireToast[] = [];
 
-  constructor(private readonly service: NotificationService) {}
+  constructor(readonly service: NotificationService) {}
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {
     this.service.emitter.subscribe((toasts: NotifireToast[]) => {
@@ -58,6 +69,10 @@ export class NgxNotifireComponent implements OnInit, OnDestroy {
           ? -this.service.config.global.maxAtPosition
           : 4;
         this.blockSizeB = undefined;
+        this.withBackdrop = toasts.filter(
+          (toast) =>
+            toast.config && toast.config.backdrop && toast.config.backdrop >= 0
+        );
       } else {
         this.dockSizeA = 0;
         this.dockSizeB =
@@ -66,6 +81,14 @@ export class NgxNotifireComponent implements OnInit, OnDestroy {
         this.blockSizeB =
           this.service.config.global &&
           this.service.config.global.maxAtPosition;
+        this.withBackdrop = toasts
+          .filter(
+            (toast) =>
+              toast.config &&
+              toast.config.backdrop &&
+              toast.config.backdrop >= 0
+          )
+          .reverse();
       }
       this.notifications = this.splitToasts(
         toasts.slice(this.dockSizeA, this.dockSizeB)
@@ -111,10 +134,41 @@ export class NgxNotifireComponent implements OnInit, OnDestroy {
    * Changes the backdrop opacity
    * @param event NotificationEventType
    */
-  stateChanged(event: NotificationEventType) {}
+  stateChanged(event: NotificationEventType) {
+    console.log(event);
+    if (!this.withBackdrop.length) {
+      if (this.backdrop && this.backdrop >= 0) {
+        this.backdrop = -1;
+      }
+      return;
+    }
+    switch (event) {
+      case 'mounted':
+        if (this.backdrop && this.backdrop < 0) {
+          this.backdrop = 0;
+        }
+        break;
+      case 'beforeShow':
+        this.backdrop =
+          this.withBackdrop[this.withBackdrop.length - 1].config?.backdrop;
+        break;
+      case 'beforeHide':
+        if (this.withBackdrop.length === 1) {
+          this.backdrop = 0;
+        }
+        break;
+      case 'hidden':
+        if (this.withBackdrop.length === 1) {
+          this.backdrop = -1;
+        }
+        break;
+    }
+  }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    // this.unsubscribe$.next();
+    // this.unsubscribe$.complete();
+    console.log('des');
+    this.emitter.unsubscribe();
   }
 }

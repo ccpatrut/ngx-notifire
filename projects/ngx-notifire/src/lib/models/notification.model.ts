@@ -1,5 +1,5 @@
 import { SafeHtml } from '@angular/platform-browser';
-import { NotificationConfig } from './notification-config.interface';
+import { NotifireConfig } from './notification-config.interface';
 import { NotificationType } from './notification-type.model';
 
 export class NotificationModel {
@@ -16,7 +16,7 @@ export class NotificationModel {
     /**
      * Config object
      */
-    public config?: NotificationConfig,
+    public config?: NotifireConfig,
     /**
      * Html content
      */

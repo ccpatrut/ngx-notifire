@@ -1,13 +1,13 @@
 import { NotificationGlobalConfig } from './global-config.interface';
-import { NotificationConfig } from './notification-config.interface';
+import { NotifireConfig } from './notification-config.interface';
 
 /**
  * Global configuration object
  */
 export interface NotificationDefaults {
   global?: NotificationGlobalConfig;
-  toast?: NotificationConfig;
+  toast?: NotifireConfig;
   type?: {
-    [key: string]: NotificationConfig;
+    [key: string]: NotifireConfig;
   };
 }

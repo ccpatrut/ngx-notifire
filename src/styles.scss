@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+.material {
+  @import "/projects/ngx-notifire/styles/material.scss";
+}
+.simple {
+  @import "/projects/ngx-notifire/styles/simple.scss";
+}
+.dark {
+  @import "/projects/ngx-notifire/styles/dark.scss";
+}
+
+.snotify-icon {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+}

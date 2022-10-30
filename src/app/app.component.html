@@ -1,1 +1,8 @@
-<ngx-notifire></ngx-notifire>
+<ngx-notifire class="{{ style }}"></ngx-notifire>
+<div
+    class="btn btn-success"
+    (click)="onSuccess()"
+>
+    Success
+</div>
+{{notificationService.notifications.length}}

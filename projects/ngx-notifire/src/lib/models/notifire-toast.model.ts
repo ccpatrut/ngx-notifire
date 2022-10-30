@@ -1,5 +1,5 @@
 import { Subject, Subscription } from 'rxjs';
-import { NotificationConfig } from './notification-config.interface';
+import { NotifireConfig } from './notification-config.interface';
 import { NotificationEventType } from './notification-event-type.model';
 import { NotificationType } from './notification-type.model';
 
@@ -26,7 +26,7 @@ export class NotifireToast {
     public id: number,
     public title: string,
     public body: string,
-    public config?: NotificationConfig
+    public config?: NotifireConfig
   ) {
     if (this.config && this.config.type === NotificationType.PROMPT) {
       this.value = '';

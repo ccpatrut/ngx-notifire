@@ -3,9 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
@@ -18,7 +20,7 @@ import { NotificationService } from '../../services';
   templateUrl: './toast.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class ToastComponent implements OnInit, OnDestroy {
+export class ToastComponent implements OnInit, OnDestroy, OnChanges {
   private unsubscribe$ = new Subject<void>();
 
   /**
@@ -44,6 +46,9 @@ export class ToastComponent implements OnInit, OnDestroy {
   };
 
   constructor(private readonly service: NotificationService) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
 
   ngOnInit(): void {
     this.service.toastChanged
@@ -68,7 +73,20 @@ export class ToastComponent implements OnInit, OnDestroy {
     this.toast.eventEmitter.next(NotificationEventType.MOUNTED);
     this.state.animation = 'snotifyToast--in';
   }
-
+  ngAfterContentInit() {
+    if (this.service.config.toast && this.service.config.toast.animation) {
+      setTimeout(() => {
+        this.stateChanged.emit(NotificationEventType.BEFORE_SHOW);
+        this.toast.eventEmitter.next(NotificationEventType.BEFORE_SHOW);
+        this.state.animation =
+          this.toast.config &&
+          this.toast.config.animation &&
+          this.toast.config.animation.enter
+            ? this.toast.config.animation.enter
+            : '';
+      }, this.service.config.toast.animation.time / 5); // time to show toast push animation (snotifyToast--in)
+    }
+  }
   /**
    * Trigger beforeDestroy lifecycle. Removes toast
    */
@@ -161,7 +179,9 @@ export class ToastComponent implements OnInit, OnDestroy {
    */
   startTimeout(startTime: number = 0) {
     const start = performance.now();
+    //todo: get rid of recursion
     const calculate = () => {
+      console.log(this.toast && this.toast.config && this.toast.config.timeout);
       this.animationFrame = requestAnimationFrame((timestamp) => {
         const runtime = timestamp + startTime - start;
         const progress = Math.min(

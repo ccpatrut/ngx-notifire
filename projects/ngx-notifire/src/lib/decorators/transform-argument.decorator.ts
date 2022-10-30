@@ -1,8 +1,4 @@
-import {
-  NotificationConfig,
-  NotificationModel,
-  NotificationType,
-} from '../models';
+import { NotifireConfig, NotificationModel, NotificationType } from '../models';
 
 //todo: cp check if async
 /**

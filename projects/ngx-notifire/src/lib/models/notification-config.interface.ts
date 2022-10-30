@@ -4,7 +4,7 @@ import { NotificationAnimate } from './notification-animate.interface';
 import { NotificationPositionType } from './notification-position-type.model';
 import { NotificationType } from './notification-type.model';
 
-export interface NotificationConfig {
+export interface NotifireConfig {
   /**
    * Notification timeout in milliseconds.
    * Disable timeout = 0
@@ -82,4 +82,11 @@ export interface NotificationConfig {
    * Toasts position on screen
    */
   position?: NotificationPositionType;
+
+  /**
+   * Backdrop opacity.
+   * * **Range:** `0.0 - 1.0`.
+   * * **Disabled:** `-1`
+   */
+  backdrop?: number;
 }
