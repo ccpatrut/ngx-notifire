@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
-import { NgxNotifireComponent } from './ngx-notifire.component';
-
-
+import { PromptComponent } from './components/prompt/prompt.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { ButtonsComponent } from './components/buttons/buttons.component';
+import { CommonModule } from '@angular/common';
+import { TruncatePipe } from './pipes';
+import { NgxNotifireComponent } from './components/ngx-notifire/ngx-notifire.component';
 
 @NgModule({
   declarations: [
-    NgxNotifireComponent
+    PromptComponent,
+    ToastComponent,
+    ButtonsComponent,
+    TruncatePipe,
+    NgxNotifireComponent,
   ],
-  imports: [
-  ],
-  exports: [
-    NgxNotifireComponent
-  ]
+  imports: [CommonModule],
+  exports: [NgxNotifireComponent],
 })
-export class NgxNotifireModule { }
+export class NgxNotifireModule {}

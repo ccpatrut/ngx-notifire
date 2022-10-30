@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'lib-ngx-notifire',
+  selector: 'ngx-notifire',
   templateUrl: './ngx-notifire.component.html',
-  styleUrls: ['./ngx-notifire.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NgxNotifireComponent implements OnInit {
   constructor() {}

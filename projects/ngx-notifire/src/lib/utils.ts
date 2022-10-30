@@ -35,6 +35,6 @@ export function uuid(): number {
  * @param item Object<any>
  * @returns boolean
  */
-export function isObject(item): boolean {
+export function isObject(item: any): boolean {
   return item && typeof item === 'object' && !Array.isArray(item);
 }

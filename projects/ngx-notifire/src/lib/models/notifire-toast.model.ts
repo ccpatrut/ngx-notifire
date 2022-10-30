@@ -60,10 +60,10 @@ export class NotifireToast {
    * @param toast SnotifyToast
    */
   equals(toast: NotifireToast): boolean {
-    return (
-      this.body === toast.body &&
-      this.title === toast.title &&
-      this.config.type === toast.config.type
-    );
+    return this.config && toast.config
+      ? this.body === toast.body &&
+          this.title === toast.title &&
+          this.config.type === toast.config.type
+      : this.body === toast.body && this.title === toast.title;
   }
 }
