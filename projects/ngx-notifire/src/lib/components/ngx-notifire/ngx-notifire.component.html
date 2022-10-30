@@ -1,4 +1,11 @@
-<div class="notification">
-    <div class="icon">s</div>
-    <div class="message"></div>
+<div
+    *ngFor="let position of notifications | keys"
+    class="snotify snotify-{{ position }}"
+>
+    <ngx-toast
+        *ngFor="let notification of getNotificationArray(notifications, position) | slice: blockSizeA:blockSizeB"
+        [toast]="notification"
+        (stateChanged)="stateChanged($event)"
+    >
+    </ngx-toast>
 </div>

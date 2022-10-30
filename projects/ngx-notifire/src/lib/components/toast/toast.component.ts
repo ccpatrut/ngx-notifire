@@ -14,7 +14,7 @@ import { NotifireToast } from '../../models/notifire-toast.model';
 import { NotificationService } from '../../services';
 
 @Component({
-  selector: 'lib-toast',
+  selector: 'ngx-toast',
   templateUrl: './toast.component.html',
   encapsulation: ViewEncapsulation.None,
 })

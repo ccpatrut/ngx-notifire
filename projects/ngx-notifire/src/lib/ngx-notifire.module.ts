@@ -3,7 +3,7 @@ import { PromptComponent } from './components/prompt/prompt.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { CommonModule } from '@angular/common';
-import { TruncatePipe } from './pipes';
+import { KeysPipe, TruncatePipe } from './pipes';
 import { NgxNotifireComponent } from './components/ngx-notifire/ngx-notifire.component';
 
 @NgModule({
@@ -13,6 +13,7 @@ import { NgxNotifireComponent } from './components/ngx-notifire/ngx-notifire.com
     ButtonsComponent,
     TruncatePipe,
     NgxNotifireComponent,
+    KeysPipe,
   ],
   imports: [CommonModule],
   exports: [NgxNotifireComponent],
