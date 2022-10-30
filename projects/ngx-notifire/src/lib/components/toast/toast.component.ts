@@ -179,9 +179,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
    */
   startTimeout(startTime: number = 0) {
     const start = performance.now();
-    //todo: get rid of recursion
     const calculate = () => {
-      console.log(this.toast && this.toast.config && this.toast.config.timeout);
       this.animationFrame = requestAnimationFrame((timestamp) => {
         const runtime = timestamp + startTime - start;
         const progress = Math.min(
@@ -207,6 +205,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
           this.service.remove(this.toast.id);
         }
       });
+      console.log(this.animationFrame);
     };
     calculate();
   }
