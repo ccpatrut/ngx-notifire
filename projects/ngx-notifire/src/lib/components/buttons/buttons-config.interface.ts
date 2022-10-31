@@ -1,4 +1,4 @@
-import { NotifireToast } from './notifire-toast.model';
+import { NotifireModel } from '../toast/notifire-toast.model';
 
 export interface ButtonsConfig {
   /**
@@ -16,5 +16,5 @@ export interface ButtonsConfig {
    * @param text? string
    * @returns void
    */
-  action?: (toast: NotifireToast) => void;
+  action?: (toast: NotifireModel) => void;
 }

@@ -1,14 +1,14 @@
 import { Subject, Subscription } from 'rxjs';
-import { NotifireConfig } from './notification-config.interface';
-import { NotificationEventType } from './notification-event-type.model';
-import { NotificationType } from './notification-type.model';
+import { NotifireConfig } from '../../models/notification-config.interface';
+import { NotificationEventType } from '../../models/notification-event-type.model';
+import { NotificationType } from '../../models/notification-type.model';
 
 /**
  * Toast main model
  */
-export class NotifireToast {
+export class NotifireModel {
   /**
-   * Emits SnotifyEventType
+   * Emits NotifireEventType
    */
   readonly eventEmitter = new Subject<NotificationEventType>();
 
@@ -20,13 +20,13 @@ export class NotifireToast {
   /**
    * Toast prompt value
    */
-  value!: string;
+  value?: string;
 
   constructor(
-    public id: number,
-    public title: string,
-    public body: string,
-    public config?: NotifireConfig
+    public readonly id: number,
+    public readonly title: string,
+    public readonly body: string,
+    public readonly config: NotifireConfig
   ) {
     if (this.config && this.config.type === NotificationType.PROMPT) {
       this.value = '';
@@ -40,7 +40,7 @@ export class NotifireToast {
   /**
    * Subscribe to toast events
    * @returns this
-   * @param event SnotifyEventType
+   * @param event NotificationEventType
    * @param action (toast: this) => void
    */
   on(event: NotificationEventType, action: (toast: this) => void): this {
@@ -59,7 +59,7 @@ export class NotifireToast {
    * @returns boolean true then equals else false.
    * @param toast SnotifyToast
    */
-  equals(toast: NotifireToast): boolean {
+  equals(toast: NotifireModel): boolean {
     return this.config && toast.config
       ? this.body === toast.body &&
           this.title === toast.title &&

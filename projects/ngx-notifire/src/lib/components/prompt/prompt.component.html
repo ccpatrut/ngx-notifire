@@ -9,7 +9,7 @@
         type="text"
         [id]="toast.id"
         (focus)="isPromptFocused = true"
-        (blur)="isPromptFocused = !!toast.value.length"
+        (blur)="isPromptFocused = !!toast.value && !!toast.value.length"
     >
     <label
         class="snotifyToast__input__label"

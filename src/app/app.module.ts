@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxNotifireModule, NotificationService } from 'ngx-notifire';
-import { ToastDefaults } from 'projects/ngx-notifire/src/lib/toast-defaults';
+import { ToastDefaults } from 'projects/ngx-notifire/src/lib/defaults/toast-defaults';
 
 import { AppComponent } from './app.component';
 

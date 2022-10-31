@@ -8,7 +8,7 @@ import {
 import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { NotificationEventType, NotificationPositionType } from '../../models';
 import { NotifireNotifications } from '../../models/notifire-notifications.interface';
-import { NotifireToast } from '../../models/notifire-toast.model';
+import { NotifireModel } from '../toast/notifire-toast.model';
 import { NotificationService } from '../../services';
 
 @Component({
@@ -49,24 +49,24 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * How many toasts with backdrop in current queue
    */
-  withBackdrop: NotifireToast[] = [];
+  withBackdrop: NotifireModel[] = [];
 
   constructor(readonly service: NotificationService) {}
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {
-    this.service.emitter.subscribe((toasts: NotifireToast[]) => {
+    this.service.emitter.subscribe((toasts: NotifireModel[]) => {
       if (
-        this.service.config &&
-        this.service.config.global &&
-        this.service.config.global.newOnTop
+        this.service.defaultConfig &&
+        this.service.defaultConfig.global &&
+        this.service.defaultConfig.global.newOnTop
       ) {
-        this.dockSizeA = this.service.config.global.maxOnScreen
-          ? -this.service.config.global.maxOnScreen
+        this.dockSizeA = this.service.defaultConfig.global.maxOnScreen
+          ? -this.service.defaultConfig.global.maxOnScreen
           : 6;
         this.dockSizeB = undefined;
-        this.blockSizeA = this.service.config.global.maxAtPosition
-          ? -this.service.config.global.maxAtPosition
+        this.blockSizeA = this.service.defaultConfig.global.maxAtPosition
+          ? -this.service.defaultConfig.global.maxAtPosition
           : 4;
         this.blockSizeB = undefined;
         this.withBackdrop = toasts.filter(
@@ -76,11 +76,12 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.dockSizeA = 0;
         this.dockSizeB =
-          this.service.config.global && this.service.config.global.maxOnScreen;
+          this.service.defaultConfig.global &&
+          this.service.defaultConfig.global.maxOnScreen;
         this.blockSizeA = 0;
         this.blockSizeB =
-          this.service.config.global &&
-          this.service.config.global.maxAtPosition;
+          this.service.defaultConfig.global &&
+          this.service.defaultConfig.global.maxAtPosition;
         this.withBackdrop = toasts
           .filter(
             (toast) =>
@@ -102,7 +103,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param toasts SnotifyToast[]
    * @returns SnotifyNotifications
    */
-  splitToasts(toasts: NotifireToast[]): NotifireNotifications {
+  splitToasts(toasts: NotifireModel[]): NotifireNotifications {
     const result: NotifireNotifications = {};
 
     for (const property in NotificationPositionType) {
@@ -115,7 +116,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
 
-    toasts.forEach((toast: NotifireToast) => {
+    toasts.forEach((toast: NotifireModel) => {
       result[toast.config?.position as NotificationPositionType]?.push(toast);
     });
 
@@ -125,7 +126,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   getNotificationArray(
     notifications: NotifireNotifications,
     position: NotificationPositionType
-  ): NotifireToast[] | undefined {
+  ): NotifireModel[] | undefined {
     return notifications[position];
   }
 

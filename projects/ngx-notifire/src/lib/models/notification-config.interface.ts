@@ -1,5 +1,5 @@
 import { SafeHtml } from '@angular/platform-browser';
-import { ButtonsConfig } from './buttons-config.interface';
+import { ButtonsConfig } from '../components/buttons/buttons-config.interface';
 import { NotificationAnimate } from './notification-animate.interface';
 import { NotificationPositionType } from './notification-position-type.model';
 import { NotificationType } from './notification-type.model';

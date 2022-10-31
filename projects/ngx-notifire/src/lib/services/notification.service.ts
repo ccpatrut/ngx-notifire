@@ -8,9 +8,9 @@ import {
   NotificationEventType,
   NotificationType,
 } from '../models';
-import { NotificationDefaults } from '../models/defaults.interface';
+import { NotificationDefaults } from '../defaults/defaults.interface';
 import { NotificationModel } from '../models/notification.model';
-import { NotifireToast } from '../models/notifire-toast.model';
+import { NotifireModel } from '../components/toast/notifire-toast.model';
 import { mergeDeep, uuid } from '../utils';
 
 @Injectable()
@@ -19,27 +19,34 @@ export class NotificationService {
    * Minimum display time of the notification message
    */
   private readonly minimumDisplayedTime = 3000;
-  readonly emitter = new Subject<NotifireToast[]>();
+
+  /**
+   * Emits Notifire Notifications
+   */
+  readonly emitter = new Subject<NotifireModel[]>();
+
   readonly toastDeleted = new Subject<number>();
-  readonly toastChanged = new Subject<NotifireToast>();
+  readonly toastChanged = new Subject<NotifireModel>();
 
-  notifications: Array<NotifireToast> = [];
+  notifications: Array<NotifireModel> = [];
 
-  constructor(@Inject('NotifireConfig') public config: NotificationDefaults) {}
+  constructor(
+    @Inject('NotifireConfig') public defaultConfig: NotificationDefaults
+  ) {}
 
   /**
    * Creates toast and add it to array, returns toast id
    * @param NotificationModel NotificationModel
    * @return number
    */
-  create(notif: NotificationModel): NotifireToast {
-    if (this.config.type && notif.config && notif.config.type) {
+  create(notif: NotificationModel): NotifireModel {
+    if (this.defaultConfig.type && notif.config && notif.config.type) {
       const config = mergeDeep(
-        this.config.toast,
-        this.config.type[notif.config.type],
+        this.defaultConfig.toast,
+        this.defaultConfig.type[notif.config.type],
         notif.config
       );
-      const toast = new NotifireToast(
+      const toast = new NotifireModel(
         uuid(),
         notif.title ? notif.title : '',
         notif.body ? notif.body : '',
@@ -48,11 +55,11 @@ export class NotificationService {
       this.add(toast);
       return toast;
     }
-    const defaulToast = new NotifireToast(
+    const defaulToast = new NotifireModel(
       uuid(),
       notif.title ? notif.title : '',
       notif.body ? notif.body : '',
-      this.config.toast
+      this.defaultConfig.toast
     );
     this.add(defaulToast);
     return defaulToast;
@@ -62,10 +69,11 @@ export class NotificationService {
    * @param id number
    * @param remove boolean
    */
-  remove(id?: number, remove?: boolean): void {
+  remove(id: number, remove?: boolean): void {
     if (!id) {
       return this.clear();
-    } else if (remove) {
+    }
+    if (remove) {
       this.notifications = this.notifications.filter(
         (toast) => toast.id !== id
       );
@@ -75,12 +83,13 @@ export class NotificationService {
   }
 
   setDefaults(defaults: NotificationDefaults): NotificationDefaults {
-    const mergedConfig = (this.config = mergeDeep(
-      this.config,
+    const mergedConfig = (this.defaultConfig = mergeDeep(
+      this.defaultConfig,
       defaults
     ) as NotificationDefaults);
     return mergedConfig;
   }
+
   /**
    * Clear notifications array
    */
@@ -88,72 +97,84 @@ export class NotificationService {
     this.notifications = [];
     this.emit();
   }
+
   /**
    * add NotifireToast to notifications array
    * @param toast NotifireToast
    */
-  private add(toast: NotifireToast): void {
+  private add(toast: NotifireModel): void {
     if (
-      this.config &&
-      this.config.global &&
-      this.config.global.filterDuplicates &&
+      this.defaultConfig &&
+      this.defaultConfig.global &&
+      this.defaultConfig.global.filterDuplicates &&
       this.containsToast(toast)
     ) {
       return;
     }
-    if (this.config && this.config.global && this.config.global.newOnTop) {
+    if (
+      this.defaultConfig &&
+      this.defaultConfig.global &&
+      this.defaultConfig.global.newOnTop
+    ) {
       this.notifications.unshift(toast);
     } else {
       this.notifications.push(toast);
     }
     this.emit();
   }
+
   /**
    * emit changes in notifications array
    */
   private emit(): void {
     this.emitter.next(this.notifications.slice());
   }
+
   /**
    * checks if the toast is in the collection.
    * @param inToast NotifireToast
    * @returns boolean
    */
-  private containsToast(inToast: NotifireToast): boolean {
+  private containsToast(inToast: NotifireModel): boolean {
     return this.notifications.some((toast) => toast.equals(inToast));
   }
 
   /**
-   *
-   * @param message parameter for which the reading length time will be calculates
-   * @returns
+   * Creates empty toast with html string inside
+   * @param html string | SafeHtml
+   * @param config NotifireConfig
+   * @returns number
    */
-  private calculateTtlForMessage(message: string): number {
-    const countOfSpaces = message.split(' ').length - 1;
-    const time = countOfSpaces * 480;
-    return time > 2500 ? time : this.minimumDisplayedTime;
+  html(html: string | SafeHtml, config?: NotifireConfig): NotifireModel {
+    return this.create({
+      title: undefined,
+      body: undefined,
+      config: {
+        ...config,
+        ...{ html },
+      },
+    });
   }
-
   /**
    * Create toast with success style returns toast id;
    * @param body string
    * @returns number
    */
-  success(body: string): NotifireToast;
+  success(body: string): NotifireModel;
   /**
    * Create toast with success style returns toast id;
    * @param body string
    * @param title string
    * @returns number
    */
-  success(body: string, title: string): NotifireToast;
+  success(body: string, title: string): NotifireModel;
   /**
    * Create toast with success style returns toast id;
    * @param body string
    * @param config NotificationConfig
    * @returns number
    */
-  success(body: string, config: NotifireConfig): NotifireToast;
+  success(body: string, config: NotifireConfig): NotifireModel;
   /**
    * Create toast with success style  returns toast id;
    * @param [body] string
@@ -161,7 +182,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  success(body: string, title: string, config: NotifireConfig): NotifireToast;
+  success(body: string, title: string, config: NotifireConfig): NotifireModel;
 
   /**
    * Transform toast arguments into NotificationModel object
@@ -171,7 +192,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  success(args: any): NotifireToast {
+  success(args: any): NotifireModel {
     return this.create(args);
   }
 
@@ -180,21 +201,21 @@ export class NotificationService {
    * @param body string
    * @returns number
    */
-  error(body: string): NotifireToast;
+  error(body: string): NotifireModel;
   /**
    * Create toast with error style returns toast id;
    * @param body string
    * @param title string
    * @returns number
    */
-  error(body: string, title: string): NotifireToast;
+  error(body: string, title: string): NotifireModel;
   /**
    * Create toast with error style returns toast id;
    * @param body string
    * @param config NotificationConfig
    * @returns number
    */
-  error(body: string, config: NotifireConfig): NotifireToast;
+  error(body: string, config: NotifireConfig): NotifireModel;
   /**
    * Create toast with error style  returns toast id;
    * @param [body] string
@@ -202,7 +223,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  error(body: string, title: string, config: NotifireConfig): NotifireToast;
+  error(body: string, title: string, config: NotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -211,7 +232,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  error(args: any): NotifireToast {
+  error(args: any): NotifireModel {
     return this.create(args);
   }
 
@@ -220,21 +241,21 @@ export class NotificationService {
    * @param body string
    * @returns number
    */
-  info(body: string): NotifireToast;
+  info(body: string): NotifireModel;
   /**
    * Create toast with info style returns toast id;
    * @param body string
    * @param title string
    * @returns number
    */
-  info(body: string, title: string): NotifireToast;
+  info(body: string, title: string): NotifireModel;
   /**
    * Create toast with info style returns toast id;
    * @param body string
    * @param config NotificationConfig
    * @returns number
    */
-  info(body: string, config: NotifireConfig): NotifireToast;
+  info(body: string, config: NotifireConfig): NotifireModel;
   /**
    * Create toast with info style  returns toast id;
    * @param [body] string
@@ -242,7 +263,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  info(body: string, title: string, config: NotifireConfig): NotifireToast;
+  info(body: string, title: string, config: NotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -251,7 +272,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  info(args: any): NotifireToast {
+  info(args: any): NotifireModel {
     return this.create(args);
   }
 
@@ -260,21 +281,21 @@ export class NotificationService {
    * @param body string
    * @returns number
    */
-  warning(body: string): NotifireToast;
+  warning(body: string): NotifireModel;
   /**
    * Create toast with warning style returns toast id;
    * @param body string
    * @param title string
    * @returns number
    */
-  warning(body: string, title: string): NotifireToast;
+  warning(body: string, title: string): NotifireModel;
   /**
    * Create toast with warning style returns toast id;
    * @param body string
    * @param config NotificationConfig
    * @returns number
    */
-  warning(body: string, config: NotifireConfig): NotifireToast;
+  warning(body: string, config: NotifireConfig): NotifireModel;
   /**
    * Create toast with warning style  returns toast id;
    * @param [body] string
@@ -282,7 +303,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  warning(body: string, title: string, config: NotifireConfig): NotifireToast;
+  warning(body: string, title: string, config: NotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -291,7 +312,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  warning(args: any): NotifireToast {
+  warning(args: any): NotifireModel {
     return this.create(args);
   }
 
@@ -300,21 +321,21 @@ export class NotificationService {
    * @param body string
    * @returns number
    */
-  confirm(body: string): NotifireToast;
+  confirm(body: string): NotifireModel;
   /**
    * Create toast with confirm style returns toast id;
    * @param body string
    * @param title string
    * @returns number
    */
-  confirm(body: string, title: string): NotifireToast;
+  confirm(body: string, title: string): NotifireModel;
   /**
    * Create toast with confirm style returns toast id;
    * @param body string
    * @param config NotificationConfig
    * @returns number
    */
-  confirm(body: string, config: NotifireConfig): NotifireToast;
+  confirm(body: string, config: NotifireConfig): NotifireModel;
   /**
    * Create toast with confirm style  returns toast id;
    * @param [body] string
@@ -322,7 +343,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  confirm(body: string, title: string, config: NotifireConfig): NotifireToast;
+  confirm(body: string, title: string, config: NotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -331,7 +352,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  confirm(args: any): NotifireToast {
+  confirm(args: any): NotifireModel {
     return this.create(args);
   }
 
@@ -340,21 +361,21 @@ export class NotificationService {
    * @param body string
    * @returns number
    */
-  prompt(body: string): NotifireToast;
+  prompt(body: string): NotifireModel;
   /**
    * Create toast with Prompt style with two buttons, returns toast id;
    * @param body string
    * @param title string
    * @returns number
    */
-  prompt(body: string, title: string): NotifireToast;
+  prompt(body: string, title: string): NotifireModel;
   /**
    * Create toast with Prompt style with two buttons, returns toast id;
    * @param body string
    * @param config NotificationConfig
    * @returns number
    */
-  prompt(body: string, config: NotifireConfig): NotifireToast;
+  prompt(body: string, config: NotifireConfig): NotifireModel;
   /**
    * Create toast with Prompt style with two buttons, returns toast id;
    * @param [body] string
@@ -362,7 +383,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  prompt(body: string, title: string, config: NotifireConfig): NotifireToast;
+  prompt(body: string, title: string, config: NotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -371,7 +392,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  prompt(args: any): NotifireToast {
+  prompt(args: any): NotifireModel {
     return this.create(args);
   }
 
@@ -384,7 +405,7 @@ export class NotificationService {
   async(
     body: string,
     action: Promise<NotificationModel> | Observable<NotificationModel>
-  ): NotifireToast;
+  ): NotifireModel;
   /**
    * Creates async toast with Info style. Pass action, and resolve or reject it.
    * @param body string
@@ -396,7 +417,7 @@ export class NotificationService {
     body: string,
     title: string,
     action: Promise<NotificationModel> | Observable<NotificationModel>
-  ): NotifireToast;
+  ): NotifireModel;
   /**
    * Creates async toast with Info style. Pass action, and resolve or reject it.
    * @param body string
@@ -408,7 +429,7 @@ export class NotificationService {
     body: string,
     action: Promise<NotificationModel> | Observable<NotificationModel>,
     config: NotifireConfig
-  ): NotifireToast;
+  ): NotifireModel;
   /**
    * Creates async toast with Info style. Pass action, and resolve or reject it.
    * @param body string
@@ -422,7 +443,7 @@ export class NotificationService {
     title: string,
     action: Promise<NotificationModel> | Observable<NotificationModel>,
     config: NotifireConfig
-  ): NotifireToast;
+  ): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -431,7 +452,7 @@ export class NotificationService {
    * Determines current toast type and collects default configuration
    */
   @SetToastType
-  async(args: any): NotifireToast {
+  async(args: any): NotifireModel {
     let async: Observable<any>;
     if (args.action instanceof Promise) {
       async = from(args.action);
@@ -467,11 +488,11 @@ export class NotificationService {
     if (next.title) {
       toast.title = next.title;
     }
-    if (type && this.config) {
+    if (type && this.defaultConfig) {
       toast.config = mergeDeep(
         toast.config,
-        this.config.global,
-        this.config.toast?.type,
+        this.defaultConfig.global,
+        this.defaultConfig.toast?.type,
         { type },
         next.config
       );
@@ -483,22 +504,5 @@ export class NotificationService {
     }
     this.emit();
     this.toastChanged.next(toast);
-  }
-
-  /**
-   * Creates empty toast with html string inside
-   * @param html string | SafeHtml
-   * @param config SnotifyToastConfig
-   * @returns number
-   */
-  html(html: string | SafeHtml, config?: NotifireConfig): NotifireToast {
-    return this.create({
-      title: undefined,
-      body: undefined,
-      config: {
-        ...config,
-        ...{ html },
-      },
-    });
   }
 }

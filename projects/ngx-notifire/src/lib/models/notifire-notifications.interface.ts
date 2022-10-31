@@ -1,15 +1,15 @@
-import { NotifireToast } from './notifire-toast.model';
+import { NotifireModel } from '../components/toast/notifire-toast.model';
 
 export interface NotifireNotifications {
-  leftTop?: NotifireToast[];
-  leftCenter?: NotifireToast[];
-  leftBottom?: NotifireToast[];
+  leftTop?: NotifireModel[];
+  leftCenter?: NotifireModel[];
+  leftBottom?: NotifireModel[];
 
-  rightTop?: NotifireToast[];
-  rightCenter?: NotifireToast[];
-  rightBottom?: NotifireToast[];
+  rightTop?: NotifireModel[];
+  rightCenter?: NotifireModel[];
+  rightBottom?: NotifireModel[];
 
-  centerTop?: NotifireToast[];
-  centerCenter?: NotifireToast[];
-  centerBottom?: NotifireToast[];
+  centerTop?: NotifireModel[];
+  centerCenter?: NotifireModel[];
+  centerBottom?: NotifireModel[];
 }

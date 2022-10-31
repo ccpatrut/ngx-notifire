@@ -1,4 +1,4 @@
-import { NotificationPositionType, NotificationType } from './models';
+import { NotificationPositionType, NotificationType } from '../models';
 
 /**
  * Snotify default configuration object

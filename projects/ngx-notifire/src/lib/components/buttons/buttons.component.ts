@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { NotifireToast } from '../../models/notifire-toast.model';
+import { NotifireModel } from '../toast/notifire-toast.model';
 import { NotificationService } from '../../services';
 
 @Component({
@@ -21,7 +21,7 @@ export class ButtonsComponent {
   /**
    * Get buttons Array
    */
-  @Input() toast!: NotifireToast;
+  @Input() toast!: NotifireModel;
 
   constructor(private readonly service: NotificationService) {}
 

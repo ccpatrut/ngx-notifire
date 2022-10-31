@@ -6,7 +6,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { NotificationEventType } from '../../models';
-import { NotifireToast } from '../../models/notifire-toast.model';
+import { NotifireModel } from '../toast/notifire-toast.model';
 
 @Component({
   selector: 'lib-prompt',
@@ -19,7 +19,7 @@ export class PromptComponent {
   /**
    * Get PROMPT placeholder
    */
-  @Input() toast!: NotifireToast;
+  @Input() toast!: NotifireModel;
   /**
    * Is PROMPT focused
    */

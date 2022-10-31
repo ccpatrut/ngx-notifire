@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { NotificationEventType, NotificationType } from '../../models';
-import { NotifireToast } from '../../models/notifire-toast.model';
+import { NotifireModel } from './notifire-toast.model';
 import { NotificationService } from '../../services';
 
 @Component({
@@ -26,7 +26,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Get toast from notifications array
    */
-  @Input() toast!: NotifireToast;
+  @Input() toast!: NotifireModel;
   @Output() stateChanged = new EventEmitter<NotificationEventType>();
 
   /**
@@ -53,7 +53,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.service.toastChanged
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((toast: NotifireToast) => {
+      .subscribe((toast: NotifireModel) => {
         if (this.toast.id === toast.id) {
           this.initToast();
         }
@@ -74,7 +74,10 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
     this.state.animation = 'snotifyToast--in';
   }
   ngAfterContentInit() {
-    if (this.service.config.toast && this.service.config.toast.animation) {
+    if (
+      this.service.defaultConfig.toast &&
+      this.service.defaultConfig.toast.animation
+    ) {
       setTimeout(() => {
         this.stateChanged.emit(NotificationEventType.BEFORE_SHOW);
         this.toast.eventEmitter.next(NotificationEventType.BEFORE_SHOW);
@@ -84,7 +87,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
           this.toast.config.animation.enter
             ? this.toast.config.animation.enter
             : '';
-      }, this.service.config.toast.animation.time / 5); // time to show toast push animation (snotifyToast--in)
+      }, this.service.defaultConfig.toast.animation.time / 5); // time to show toast push animation (snotifyToast--in)
     }
   }
   /**
