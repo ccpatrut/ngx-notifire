@@ -71,7 +71,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this.toast.eventEmitter.next(NotificationEventType.MOUNTED);
-    this.state.animation = 'snotifyToast--in';
+    this.state.animation = 'notifire-toast--in';
   }
   ngAfterContentInit() {
     if (
@@ -87,7 +87,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
           this.toast.config.animation.enter
             ? this.toast.config.animation.enter
             : '';
-      }, this.service.defaultConfig.toast.animation.time / 5); // time to show toast push animation (snotifyToast--in)
+      }, this.service.defaultConfig.toast.animation.time / 5); // time to show toast push animation (notifire-toast--in)
     }
   }
   /**
@@ -104,7 +104,7 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
       '';
     setTimeout(() => {
       this.stateChanged.emit(NotificationEventType.HIDDEN);
-      this.state.animation = 'snotifyToast--out';
+      this.state.animation = 'notifire-toast--out';
       this.toast.eventEmitter.next(NotificationEventType.HIDDEN);
       setTimeout(
         () => this.service.remove(this.toast.id, true),

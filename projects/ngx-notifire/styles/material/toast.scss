@@ -47,7 +47,7 @@ $snotify-body-font-size: auto !default;
   $snotify-body-font-size: 1em;
 }
 
-.snotifyToast {
+.notifire-toast {
   display: block;
   cursor: pointer;
   background-color: $simple-bg;
@@ -106,12 +106,12 @@ $snotify-body-font-size: auto !default;
   }
 }
 
-.snotifyToast-show {
+.notifire-toast-show {
   transform: translate(0, 0);
   opacity: 1;
 }
 
-.snotifyToast-remove {
+.notifire-toast-remove {
   max-height: 0;
   overflow: hidden;
   transform: translate(0, 50%);
@@ -127,86 +127,86 @@ $snotify-body-font-size: auto !default;
  **************/
 
 .snotify-simple {
-  .snotifyToast__title,
-  .snotifyToast__body {
+  .notifire-toast__title,
+  .notifire-toast__body {
     color: $simple-color;
   }
 }
 
 .snotify-success {
   background-color: $success-bg;
-  .snotifyToast__progressBar {
+  .notifire-toast__progressBar {
     background-color: $success-progressBar;
   }
-  .snotifyToast__progressBar__percentage {
+  .notifire-toast__progressBar__percentage {
     background-color: $success-progressBarPercentage;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $success-color;
   }
 }
 
 .snotify-info {
   background-color: $info-bg;
-  .snotifyToast__progressBar {
+  .notifire-toast__progressBar {
     background-color: $info-progressBar;
   }
-  .snotifyToast__progressBar__percentage {
+  .notifire-toast__progressBar__percentage {
     background-color: $info-progressBarPercentage;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $info-color;
   }
 }
 
 .snotify-warning {
   background-color: $warning-bg;
-  .snotifyToast__progressBar {
+  .notifire-toast__progressBar {
     background-color: $warning-progressBar;
   }
-  .snotifyToast__progressBar__percentage {
+  .notifire-toast__progressBar__percentage {
     background-color: $warning-progressBarPercentage;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $warning-color;
   }
 }
 
 .snotify-error {
   background-color: $error-bg;
-  .snotifyToast__progressBar {
+  .notifire-toast__progressBar {
     background-color: $error-progressBar;
   }
-  .snotifyToast__progressBar__percentage {
+  .notifire-toast__progressBar__percentage {
     background-color: $error-progressBarPercentage;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $error-color;
   }
 }
 
 .snotify-async {
   background-color: $async-bg;
-  .snotifyToast__progressBar {
+  .notifire-toast__progressBar {
     background-color: $async-progressBar;
   }
-  .snotifyToast__progressBar__percentage {
+  .notifire-toast__progressBar__percentage {
     background-color: $async-progressBarPercentage;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $async-color;
   }
 }
 
 .snotify-confirm {
   background-color: $confirm-bg;
-  .snotifyToast__progressBar {
+  .notifire-toast__progressBar {
     background-color: $confirm-progressBar;
   }
-  .snotifyToast__progressBar__percentage {
+  .notifire-toast__progressBar__percentage {
     background-color: $confirm-progressBarPercentage;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $confirm-color;
   }
 }
@@ -216,17 +216,17 @@ $snotify-body-font-size: auto !default;
   ng-snotify-prompt {
     width: 100%;
   }
-  .snotifyToast__title {
+  .notifire-toast__title {
     margin-bottom: 0;
   }
-  .snotifyToast__body {
+  .notifire-toast__body {
     color: $prompt-color;
   }
 }
 
 .snotify-confirm,
 .snotify-prompt {
-  .snotifyToast__inner {
+  .notifire-toast__inner {
     padding: 10px 15px;
   }
 }

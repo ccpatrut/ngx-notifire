@@ -1,22 +1,22 @@
 <span
-    class="snotifyToast__input"
-    [ngClass]="{ 'snotifyToast__input--filled': isPromptFocused }"
+    class="notifire-toast__input"
+    [ngClass]="{ 'notifire-toast__input--filled': isPromptFocused }"
 >
     <input
         (input)="toast.value = getValue($event); toast.eventEmitter.next(inputType)"
         autofocus
-        class="snotifyToast__input__field"
+        class="notifire-toast__input__field"
         type="text"
         [id]="toast.id"
         (focus)="isPromptFocused = true"
         (blur)="isPromptFocused = !!toast.value && !!toast.value.length"
     >
     <label
-        class="snotifyToast__input__label"
+        class="notifire-toast__input__label"
         [for]="toast.id"
     >
         <span
-            class="snotifyToast__input__labelContent"
+            class="notifire-toast__input__labelContent"
             *ngIf="toast.config && toast.config.placeholder "
         >
             {{ toast.config.placeholder | truncate }}

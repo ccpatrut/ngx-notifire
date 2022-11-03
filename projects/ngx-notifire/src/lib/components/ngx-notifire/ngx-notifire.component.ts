@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { NotificationEventType, NotificationPositionType } from '../../models';
 import { NotifireNotifications } from '../../models/notifire-notifications.interface';
 import { NotifireModel } from '../toast/notifire-toast.model';
@@ -55,52 +55,56 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {
-    this.service.emitter.subscribe((toasts: NotifireModel[]) => {
-      if (
-        this.service.defaultConfig &&
-        this.service.defaultConfig.global &&
-        this.service.defaultConfig.global.newOnTop
-      ) {
-        this.dockSizeA = this.service.defaultConfig.global.maxOnScreen
-          ? -this.service.defaultConfig.global.maxOnScreen
-          : 6;
-        this.dockSizeB = undefined;
-        this.blockSizeA = this.service.defaultConfig.global.maxAtPosition
-          ? -this.service.defaultConfig.global.maxAtPosition
-          : 4;
-        this.blockSizeB = undefined;
-        this.withBackdrop = toasts.filter(
-          (toast) =>
-            toast.config && toast.config.backdrop && toast.config.backdrop >= 0
-        );
-      } else {
-        this.dockSizeA = 0;
-        this.dockSizeB =
+    this.service.emitter
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((toasts: NotifireModel[]) => {
+        if (
+          this.service.defaultConfig &&
           this.service.defaultConfig.global &&
-          this.service.defaultConfig.global.maxOnScreen;
-        this.blockSizeA = 0;
-        this.blockSizeB =
-          this.service.defaultConfig.global &&
-          this.service.defaultConfig.global.maxAtPosition;
-        this.withBackdrop = toasts
-          .filter(
+          this.service.defaultConfig.global.newOnTop
+        ) {
+          this.dockSizeA = this.service.defaultConfig.global.maxOnScreen
+            ? -this.service.defaultConfig.global.maxOnScreen
+            : 6;
+          this.dockSizeB = undefined;
+          this.blockSizeA = this.service.defaultConfig.global.maxAtPosition
+            ? -this.service.defaultConfig.global.maxAtPosition
+            : 4;
+          this.blockSizeB = undefined;
+          this.withBackdrop = toasts.filter(
             (toast) =>
               toast.config &&
               toast.config.backdrop &&
               toast.config.backdrop >= 0
-          )
-          .reverse();
-      }
-      this.notifications = this.splitToasts(
-        toasts.slice(this.dockSizeA, this.dockSizeB)
-      );
-      this.stateChanged(NotificationEventType.MOUNTED);
-    });
+          );
+        } else {
+          this.dockSizeA = 0;
+          this.dockSizeB =
+            this.service.defaultConfig.global &&
+            this.service.defaultConfig.global.maxOnScreen;
+          this.blockSizeA = 0;
+          this.blockSizeB =
+            this.service.defaultConfig.global &&
+            this.service.defaultConfig.global.maxAtPosition;
+          this.withBackdrop = toasts
+            .filter(
+              (toast) =>
+                toast.config &&
+                toast.config.backdrop &&
+                toast.config.backdrop >= 0
+            )
+            .reverse();
+        }
+        this.notifications = this.splitToasts(
+          toasts.slice(this.dockSizeA, this.dockSizeB)
+        );
+        this.stateChanged(NotificationEventType.MOUNTED);
+      });
   }
 
   /**
    * Split toasts toasts into different objects
-   * @param toasts SnotifyToast[]
+   * @param toasts notifire-toast[]
    * @returns SnotifyNotifications
    */
   splitToasts(toasts: NotifireModel[]): NotifireNotifications {
@@ -130,7 +134,6 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
     return notifications[position];
   }
 
-  // TODO: do I want to offer it?
   /**
    * Changes the backdrop opacity
    * @param event NotificationEventType
@@ -167,9 +170,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // this.unsubscribe$.next();
-    // this.unsubscribe$.complete();
-    console.log('des');
-    this.emitter.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

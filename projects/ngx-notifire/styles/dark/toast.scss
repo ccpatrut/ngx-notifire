@@ -14,7 +14,7 @@ $snotify-body-font-size: auto !default;
   $snotify-body-font-size: 1em;
 }
 
-.snotifyToast {
+.notifire-toast {
   display: block;
   cursor: pointer;
   background-color: $toast-bg;
@@ -74,12 +74,12 @@ $snotify-body-font-size: auto !default;
   }
 }
 
-.snotifyToast-show {
+.notifire-toast-show {
   transform: translate(0, 0);
   opacity: 1;
 }
 
-.snotifyToast-remove {
+.notifire-toast-remove {
   max-height: 0;
   overflow: hidden;
   transform: translate(0, 50%);
@@ -98,7 +98,7 @@ $snotify-body-font-size: auto !default;
 
 .snotify-confirm,
 .snotify-prompt {
-  .snotifyToast__inner {
+  .notifire-toast__inner {
     padding: 10px 15px;
   }
 }

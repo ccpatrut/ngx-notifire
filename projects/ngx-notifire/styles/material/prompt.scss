@@ -1,4 +1,4 @@
-.snotifyToast__input {
+.notifire-toast__input {
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -85,48 +85,50 @@
   }
 }
 
-.snotifyToast__input--filled {
+.notifire-toast__input--filled {
   margin-top: 2.5em;
 
   &:focus,
-  .snotifyToast__input__field {
+  .notifire-toast__input__field {
     opacity: 1;
     transition-delay: 0.3s;
   }
 }
 
-.snotifyToast__input__field:focus + .snotifyToast__input__label .snotifyToast__input__labelContent,
-.snotifyToast__input--filled .snotifyToast__input__labelContent {
+.notifire-toast__input__field:focus
+  + .notifire-toast__input__label
+  .notifire-toast__input__labelContent,
+.notifire-toast__input--filled .notifire-toast__input__labelContent {
   transform: translate(0, -80%);
   transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-.snotifyToast__input__field:focus + .snotifyToast__input__label::before,
-.snotifyToast__input--filled .snotifyToast__input__label::before {
+.notifire-toast__input__field:focus + .notifire-toast__input__label::before,
+.notifire-toast__input--filled .notifire-toast__input__label::before {
   transition-delay: 0s;
 }
 
-.snotifyToast__input__field:focus + .snotifyToast__input__label::before,
-.snotifyToast__input--filled .snotifyToast__input__label::before {
+.notifire-toast__input__field:focus + .notifire-toast__input__label::before,
+.notifire-toast__input--filled .notifire-toast__input__label::before {
   transform: translate(0, 0);
 }
 
-.snotifyToast__input__field:focus + .snotifyToast__input__label::after,
-.snotifyToast__input--filled .snotifyToast__input__label::after {
+.notifire-toast__input__field:focus + .notifire-toast__input__label::after,
+.notifire-toast__input--filled .notifire-toast__input__label::after {
   transform: scale(1, 1);
   transition-delay: 0.3s;
   transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-.snotifyToast {
+.notifire-toast {
   &--invalid {
-    .snotifyToast__input__label::before {
+    .notifire-toast__input__label::before {
       border-color: $error-bg;
     }
   }
 
   &--valid {
-    .snotifyToast__input__label::before {
+    .notifire-toast__input__label::before {
       border-color: $success-bg;
     }
   }

@@ -57,7 +57,7 @@ export class NotifireModel {
   /**
    * Tests if a toast equals this toast.
    * @returns boolean true then equals else false.
-   * @param toast SnotifyToast
+   * @param toast notifire-toast
    */
   equals(toast: NotifireModel): boolean {
     return this.config && toast.config
