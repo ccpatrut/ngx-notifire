@@ -20,7 +20,7 @@ import { NotificationService } from '../../services';
   templateUrl: './toast.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class ToastComponent implements OnInit, OnDestroy, OnChanges {
+export class ToastComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   /**
@@ -46,9 +46,6 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
   };
 
   constructor(private readonly service: NotificationService) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
 
   ngOnInit(): void {
     this.service.toastChanged
@@ -208,7 +205,6 @@ export class ToastComponent implements OnInit, OnDestroy, OnChanges {
           this.service.remove(this.toast.id);
         }
       });
-      console.log(this.animationFrame);
     };
     calculate();
   }

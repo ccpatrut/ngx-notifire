@@ -1,6 +1,7 @@
 {
   "name": "notifire-workspace",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Demo application for ngx-notifire library",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

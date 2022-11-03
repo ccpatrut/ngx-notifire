@@ -139,7 +139,6 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param event NotificationEventType
    */
   stateChanged(event: NotificationEventType) {
-    console.log(event);
     if (!this.withBackdrop.length) {
       if (this.backdrop && this.backdrop >= 0) {
         this.backdrop = -1;
