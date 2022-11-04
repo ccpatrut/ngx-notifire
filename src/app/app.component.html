@@ -1,51 +1,160 @@
-<ngx-notifire class="{{ style }}"></ngx-notifire>
-<div
-    class="btn btn-success"
-    (click)="onSuccess()"
->
-    Success
-</div>
-{{notificationService.notifications.length}}
 <div class="config">
     <div class="title">Config Notifire Toast</div>
-    <div class="inputs">
-        <div class="inputs__title"></div>
-        <div class="inputs__body"></div>
-        <div class="inputs__parameters">
-            <div class="inputs__max-length">
-                <div class="inputs__title"></div>
-                <div class="inputs__body"></div>
+    <form
+        [formGroup]="snotifyForm"
+        novalidate
+    >
+        <div class="data">
+            <div
+                class="data__toast"
+                formGroupName="toastData"
+            >
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input
+                        matInput
+                        placeholder="Title"
+                        formControlName="title"
+                    >
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Body</mat-label>
+                    <input
+                        matInput
+                        placeholder="Body"
+                        formControlName="body"
+                    >
+                </mat-form-field>
             </div>
-            <div class="inputs__divers-config"></div>
+            <mat-divider></mat-divider>
+            <div
+                class="functional-config"
+                formGroupName="toastFunctionalConfig"
+            >
+                <div class="functional-config__length">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Title Max Length</mat-label>
+                        <input
+                            matInput
+                            placeholder="Max length of the displayed title"
+                            formControlName="titleMaxLength"
+                            type="number"
+                        >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Body Max Length</mat-label>
+                        <input
+                            matInput
+                            placeholder="Max length of the displayed body notification"
+                            formControlName="boydMaxLength"
+                            type="number"
+                        >
+                    </mat-form-field>
+                </div>
+                <div class="functional-config_ui">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Timeout</mat-label>
+                        <input
+                            matInput
+                            placeholder="Time before the notification expires"
+                            formControlName="timeout"
+                            type="number"
+                        >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Backdrop</mat-label>
+                        <input
+                            matInput
+                            placeholder="Shadow opacity when notiifcation is shown"
+                            formControlName="backdrop"
+                            type="number"
+                        >
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="snotifire-position">
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose an option</mat-label>
+                    <mat-select>
+                        <mat-option value="option1">Option 1</mat-option>
+                        <mat-option
+                            value="option2"
+                            disabled
+                        >
+                            Option 2 (disabled)
+                        </mat-option>
+                        <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div
+                class="inputs__config-booleans"
+                formGroupName="toastVisualConfig"
+            >
+                <mat-slide-toggle formControlName="isShowProgressBar">Show Progress Bar</mat-slide-toggle>
+                <mat-slide-toggle formControlName="isCloseOnClick">Close on click</mat-slide-toggle>
+                <mat-slide-toggle formControlName="isPauseOnHover">Pause on hover</mat-slide-toggle>
+                <mat-slide-toggle formControlName="isNewItemsOnTop">New items on top</mat-slide-toggle>
+                <mat-slide-toggle formControlName="isFilterDuplicates">Filter duplicates</mat-slide-toggle>
+
+            </div>
+            <div
+                class="inputs__max"
+                formGroupName="notificationConf"
+            >
+                <mat-form-field appearance="outline">
+                    <mat-label>Max number of Toastrs on Screen</mat-label>
+                    <input
+                        matInput
+                        placeholder="Max number of toastrs on screen"
+                        formControlName="maxOnScreen"
+                        type="number"
+                    >
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Max number of Toastrs per Position</mat-label>
+                    <input
+                        matInput
+                        placeholder="Max number of toastrs per Position"
+                        formControlName="maxAtPosition"
+                        type="number"
+                    >
+                </mat-form-field>
+
+            </div>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Choose an option</mat-label>
+                <mat-select>
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option
+                        value="option2"
+                        disabled
+                    >
+                        Option 2 (disabled)
+                    </mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
-        <div class="inputs__position"></div>
-        <div class="inputs__config-booleans">
-            <div class="inputs__progres-bar"></div>
-            <div class="inputs__close-on-click"></div>
-            <div class="inputs__pause-on-hover"></div>
-            <div class="inputs__new-items-on-top"></div>
-            <div class="inputs__filter-duplicates"></div>
+        <div class="buttons">
+            <div class="buttons__classic">
+                <div class="success"></div>
+                <div class="info"></div>
+                <div class="error"></div>
+                <div class="warning"></div>
+            </div>
+            <div class="buttons__special">
+                <div class="simple"></div>
+                <div class="async"></div>
+                <div class="confirm"></div>
+                <div class="prompt"></div>
+            </div>
+            <div class="buttons_html">
+                <div class="html"></div>
+            </div>
+            <div class="clear-all"></div>
         </div>
-        <div class="inputs__max-on-screen"></div>
-        <div class="inputs__max-at-position"></div>
-        <div class="toast-style"></div>
-    </div>
-    <div class="buttons">
-        <div class="buttons__classic">
-            <div class="success"></div>
-            <div class="info"></div>
-            <div class="error"></div>
-            <div class="warning"></div>
-        </div>
-        <div class="buttons__special">
-            <div class="simple"></div>
-            <div class="async"></div>
-            <div class="confirm"></div>
-            <div class="prompt"></div>
-        </div>
-        <div class="buttons_html">
-            <div class="html"></div>
-        </div>
-        <div class="clear-all"></div>
-    </div>
+    </form>
 </div>
