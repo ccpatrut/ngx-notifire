@@ -1,5 +1,5 @@
 <div class="config">
-    <div class="title">Config Notifire Toast</div>
+    <h1 class="title">Config Notifire Toast</h1>
     <form
         [formGroup]="snotifyForm"
         novalidate
@@ -140,21 +140,73 @@
         </div>
         <div class="buttons">
             <div class="buttons__classic">
-                <div class="success"></div>
-                <div class="info"></div>
-                <div class="error"></div>
-                <div class="warning"></div>
+                <button
+                    mat-raised-button
+                    color="primary"
+                >
+                    Success
+                </button>
+                <button
+                    mat-raised-button
+                    color="info"
+                >
+                    Info
+                </button>
+                <button
+                    mat-raised-button
+                    color="warn"
+                >
+                    Error
+                </button>
+                <button
+                    mat-raised-button
+                    color="primary"
+                >
+                    Warning
+                </button>
             </div>
             <div class="buttons__special">
-                <div class="simple"></div>
-                <div class="async"></div>
-                <div class="confirm"></div>
-                <div class="prompt"></div>
+                <button
+                    mat-raised-button
+                    color="primary"
+                >
+                    Simple
+                </button>
+                <button
+                    mat-raised-button
+                    color="info"
+                >
+                    Async
+                </button>
+                <button
+                    mat-raised-button
+                    color="warn"
+                >
+                    Confirm
+                </button>
+                <button
+                    mat-raised-button
+                    color="primary"
+                >
+                    Prompt
+                </button>
             </div>
             <div class="buttons_html">
-                <div class="html"></div>
+                <button
+                    mat-raised-button
+                    color="primary"
+                >
+                    HTML
+                </button>
             </div>
-            <div class="clear-all"></div>
+            <div class="clear-all">
+                <button
+                    mat-raised-button
+                    color="primary"
+                >
+                    Clear all
+                </button>
+            </div>
         </div>
     </form>
 </div>
