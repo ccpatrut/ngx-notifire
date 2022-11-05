@@ -1,0 +1,32 @@
+
+.page{
+  padding-top:2rem;
+  padding-bottom: 1rem;
+  .config{
+    max-width: 40rem;
+    padding: 0rem 3rem;
+    .title{
+      text-align: center;
+    }
+    .functional-config{
+        &__length,&__ui{
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+
+        mat-form-field{
+          width: 45%;
+        }
+      }
+
+    }
+  }
+}
+mat-form-field{
+  width:100%;
+}
+mat-divider{
+  padding-top:0;
+  margin-bottom: 2rem;
+}
+

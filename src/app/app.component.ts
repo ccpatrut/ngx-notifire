@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { throws } from 'assert';
 import { NotificationService } from 'ngx-notifire';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -14,7 +16,9 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    readonly notificationService: NotificationService
+    readonly notificationService: NotificationService,
+    protected readonly iconRegistry: MatIconRegistry,
+    protected readonly sanitizer: DomSanitizer
   ) {
     this.snotifyForm = this.fb.group({
       toastData: this.fb.group({
@@ -40,8 +44,20 @@ export class AppComponent implements OnInit {
       }),
       toastStyle: ['', [Validators.required]],
     });
+    this.addIcon('icon-fire', 'fire');
   }
   ngOnInit(): void {}
 
   onSuccess() {}
+
+  protected addIcon(iconName: string, location: string): void {
+    this.iconRegistry.addSvgIcon(
+      iconName,
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.getSvg(location))
+    );
+  }
+
+  private getSvg(svg: string): string {
+    return `assets/${svg}.svg`;
+  }
 }

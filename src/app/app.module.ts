@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +28,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSlideToggleModule,
     MatFormFieldModule,
     MatDividerModule,
+    MatIconModule,
+    HttpClientModule,
   ],
   providers: [
     { provide: 'NotifireConfig', useValue: ToastDefaults },

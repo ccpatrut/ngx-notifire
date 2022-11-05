@@ -1,79 +1,135 @@
-<div class="config">
-    <h1 class="title">Config Notifire Toast</h1>
-    <form
-        [formGroup]="snotifyForm"
-        novalidate
-    >
-        <div class="data">
-            <div
-                class="data__toast"
-                formGroupName="toastData"
-            >
-                <mat-form-field appearance="outline">
-                    <mat-label>Name</mat-label>
-                    <input
-                        matInput
-                        placeholder="Title"
-                        formControlName="title"
-                    >
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Body</mat-label>
-                    <input
-                        matInput
-                        placeholder="Body"
-                        formControlName="body"
-                    >
-                </mat-form-field>
-            </div>
-            <mat-divider></mat-divider>
-            <div
-                class="functional-config"
-                formGroupName="toastFunctionalConfig"
-            >
-                <div class="functional-config__length">
+<section class="page">
+    <div class="config">
+        <h1 class="title">
+            <mat-icon svgIcon="icon-fire"></mat-icon>
+            Config Notifire Toast
+            <mat-icon svgIcon="icon-fire"></mat-icon>
+        </h1>
+
+        <form
+            [formGroup]="snotifyForm"
+            novalidate
+        >
+            <div class="data">
+                <div
+                    class="data__toast"
+                    formGroupName="toastData"
+                >
                     <mat-form-field appearance="outline">
-                        <mat-label>Title Max Length</mat-label>
+                        <mat-label>Name</mat-label>
                         <input
                             matInput
-                            placeholder="Max length of the displayed title"
-                            formControlName="titleMaxLength"
-                            type="number"
+                            placeholder="Title"
+                            formControlName="title"
                         >
                     </mat-form-field>
                     <mat-form-field appearance="outline">
-                        <mat-label>Body Max Length</mat-label>
+                        <mat-label>Body</mat-label>
                         <input
                             matInput
-                            placeholder="Max length of the displayed body notification"
-                            formControlName="boydMaxLength"
-                            type="number"
+                            placeholder="Body"
+                            formControlName="body"
                         >
                     </mat-form-field>
                 </div>
-                <div class="functional-config_ui">
+                <mat-divider></mat-divider>
+                <div
+                    class="functional-config"
+                    formGroupName="toastFunctionalConfig"
+                >
+                    <div class="functional-config__length">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Title Max Length</mat-label>
+                            <input
+                                matInput
+                                placeholder="Max length of the displayed title"
+                                formControlName="titleMaxLength"
+                                type="number"
+                            >
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Body Max Length</mat-label>
+                            <input
+                                matInput
+                                placeholder="Max length of the displayed body notification"
+                                formControlName="boydMaxLength"
+                                type="number"
+                            >
+                        </mat-form-field>
+                    </div>
+                    <div class="functional-config__ui">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Timeout</mat-label>
+                            <input
+                                matInput
+                                placeholder="Time before the notification expires"
+                                formControlName="timeout"
+                                type="number"
+                            >
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Backdrop</mat-label>
+                            <input
+                                matInput
+                                placeholder="Shadow opacity when notiifcation is shown"
+                                formControlName="backdrop"
+                                type="number"
+                            >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="snotifire-position">
                     <mat-form-field appearance="outline">
-                        <mat-label>Timeout</mat-label>
-                        <input
-                            matInput
-                            placeholder="Time before the notification expires"
-                            formControlName="timeout"
-                            type="number"
-                        >
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Backdrop</mat-label>
-                        <input
-                            matInput
-                            placeholder="Shadow opacity when notiifcation is shown"
-                            formControlName="backdrop"
-                            type="number"
-                        >
+                        <mat-label>Choose an option</mat-label>
+                        <mat-select>
+                            <mat-option value="option1">Option 1</mat-option>
+                            <mat-option
+                                value="option2"
+                                disabled
+                            >
+                                Option 2 (disabled)
+                            </mat-option>
+                            <mat-option value="option3">Option 3</mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="snotifire-position">
+                <div
+                    class="inputs__config-booleans"
+                    formGroupName="toastVisualConfig"
+                >
+                    <mat-slide-toggle formControlName="isShowProgressBar">Show Progress Bar</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="isCloseOnClick">Close on click</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="isPauseOnHover">Pause on hover</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="isNewItemsOnTop">New items on top</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="isFilterDuplicates">Filter duplicates</mat-slide-toggle>
+
+                </div>
+                <div
+                    class="inputs__max"
+                    formGroupName="notificationConf"
+                >
+                    <mat-form-field appearance="outline">
+                        <mat-label>Max number of Toastrs on Screen</mat-label>
+                        <input
+                            matInput
+                            placeholder="Max number of toastrs on screen"
+                            formControlName="maxOnScreen"
+                            type="number"
+                        >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Max number of Toastrs per Position</mat-label>
+                        <input
+                            matInput
+                            placeholder="Max number of toastrs per Position"
+                            formControlName="maxAtPosition"
+                            type="number"
+                        >
+                    </mat-form-field>
+
+                </div>
+
                 <mat-form-field appearance="outline">
                     <mat-label>Choose an option</mat-label>
                     <mat-select>
@@ -88,125 +144,76 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div
-                class="inputs__config-booleans"
-                formGroupName="toastVisualConfig"
-            >
-                <mat-slide-toggle formControlName="isShowProgressBar">Show Progress Bar</mat-slide-toggle>
-                <mat-slide-toggle formControlName="isCloseOnClick">Close on click</mat-slide-toggle>
-                <mat-slide-toggle formControlName="isPauseOnHover">Pause on hover</mat-slide-toggle>
-                <mat-slide-toggle formControlName="isNewItemsOnTop">New items on top</mat-slide-toggle>
-                <mat-slide-toggle formControlName="isFilterDuplicates">Filter duplicates</mat-slide-toggle>
-
-            </div>
-            <div
-                class="inputs__max"
-                formGroupName="notificationConf"
-            >
-                <mat-form-field appearance="outline">
-                    <mat-label>Max number of Toastrs on Screen</mat-label>
-                    <input
-                        matInput
-                        placeholder="Max number of toastrs on screen"
-                        formControlName="maxOnScreen"
-                        type="number"
+            <div class="buttons">
+                <div class="buttons__classic">
+                    <button
+                        mat-raised-button
+                        color="primary"
                     >
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Max number of Toastrs per Position</mat-label>
-                    <input
-                        matInput
-                        placeholder="Max number of toastrs per Position"
-                        formControlName="maxAtPosition"
-                        type="number"
+                        Success
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="info"
                     >
-                </mat-form-field>
-
-            </div>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Choose an option</mat-label>
-                <mat-select>
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option
-                        value="option2"
-                        disabled
+                        Info
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="warn"
                     >
-                        Option 2 (disabled)
-                    </mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="buttons">
-            <div class="buttons__classic">
-                <button
-                    mat-raised-button
-                    color="primary"
-                >
-                    Success
-                </button>
-                <button
-                    mat-raised-button
-                    color="info"
-                >
-                    Info
-                </button>
-                <button
-                    mat-raised-button
-                    color="warn"
-                >
-                    Error
-                </button>
-                <button
-                    mat-raised-button
-                    color="primary"
-                >
-                    Warning
-                </button>
+                        Error
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Warning
+                    </button>
+                </div>
+                <div class="buttons__special">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Simple
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="info"
+                    >
+                        Async
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="warn"
+                    >
+                        Confirm
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Prompt
+                    </button>
+                </div>
+                <div class="buttons_html">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                    >
+                        HTML
+                    </button>
+                </div>
+                <div class="clear-all">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Clear all
+                    </button>
+                </div>
             </div>
-            <div class="buttons__special">
-                <button
-                    mat-raised-button
-                    color="primary"
-                >
-                    Simple
-                </button>
-                <button
-                    mat-raised-button
-                    color="info"
-                >
-                    Async
-                </button>
-                <button
-                    mat-raised-button
-                    color="warn"
-                >
-                    Confirm
-                </button>
-                <button
-                    mat-raised-button
-                    color="primary"
-                >
-                    Prompt
-                </button>
-            </div>
-            <div class="buttons_html">
-                <button
-                    mat-raised-button
-                    color="primary"
-                >
-                    HTML
-                </button>
-            </div>
-            <div class="clear-all">
-                <button
-                    mat-raised-button
-                    color="primary"
-                >
-                    Clear all
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+</section>
