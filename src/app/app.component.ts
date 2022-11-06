@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { throws } from 'assert';
-import { NotificationService } from 'ngx-notifire';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { NotificationPositionType, NotificationService } from 'ngx-notifire';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +15,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  snotifyForm: FormGroup;
+  snotifireForm: FormGroup;
+  positions: string[];
+  themes = ['material', 'dark', 'simple'];
 
   constructor(
     private readonly fb: FormBuilder,
@@ -20,7 +25,8 @@ export class AppComponent implements OnInit {
     protected readonly iconRegistry: MatIconRegistry,
     protected readonly sanitizer: DomSanitizer
   ) {
-    this.snotifyForm = this.fb.group({
+    this.positions = Object.keys(NotificationPositionType);
+    this.snotifireForm = this.fb.group({
       toastData: this.fb.group({
         title: ['Notification title!', [Validators.required]],
         body: ['Lorem ipsum dolor sit amet!', [Validators.required]],
@@ -38,11 +44,12 @@ export class AppComponent implements OnInit {
         isNewItemsOnTop: [true],
         isFilterDuplicates: [false],
       }),
+      position: [this.positions[3]],
       notificationConf: this.fb.group({
         maxOnScreen: [6, [Validators.required]],
         maxAtPosition: [4, [Validators.required]],
       }),
-      toastStyle: ['', [Validators.required]],
+      toastStyle: [this.themes[0], [Validators.required]],
     });
     this.addIcon('icon-fire', 'fire');
   }
@@ -50,6 +57,13 @@ export class AppComponent implements OnInit {
 
   onSuccess() {}
 
+  get positionFormControl(): FormControl | null {
+    return this.snotifireForm.get('position') as FormControl;
+  }
+
+  get themeControl(): FormControl | null {
+    return this.snotifireForm.get('toastStyle') as FormControl;
+  }
   protected addIcon(iconName: string, location: string): void {
     this.iconRegistry.addSvgIcon(
       iconName,

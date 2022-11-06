@@ -2,12 +2,14 @@
     <div class="config">
         <h1 class="title">
             <mat-icon svgIcon="icon-fire"></mat-icon>
-            Config Notifire Toast
+            Config Noti
+            <mat-icon svgIcon="icon-fire"></mat-icon>
+            Toast
             <mat-icon svgIcon="icon-fire"></mat-icon>
         </h1>
 
         <form
-            [formGroup]="snotifyForm"
+            [formGroup]="snotifireForm"
             novalidate
         >
             <div class="data">
@@ -80,17 +82,21 @@
                 </div>
                 <mat-divider></mat-divider>
                 <div class="snotifire-position">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field
+                        appearance="outline"
+                        *ngIf="positionFormControl"
+                    >
                         <mat-label>Select Notification Position</mat-label>
-                        <mat-select>
-                            <mat-option value="option1">Option 1</mat-option>
+                        <mat-select
+                            [formControl]="positionFormControl"
+                            name="position"
+                        >
                             <mat-option
-                                value="option2"
-                                disabled
+                                *ngFor="let position  of positions"
+                                [value]="position"
                             >
-                                Option 2 (disabled)
+                                {{position}}
                             </mat-option>
-                            <mat-option value="option3">Option 3</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -132,17 +138,21 @@
 
                 </div>
 
-                <mat-form-field appearance="outline">
+                <mat-form-field
+                    appearance="outline"
+                    *ngIf="themeControl"
+                >
                     <mat-label>Select theme</mat-label>
-                    <mat-select>
-                        <mat-option value="option1">Option 1</mat-option>
+                    <mat-select
+                        [formControl]="themeControl"
+                        name="toastStyle"
+                    >
                         <mat-option
-                            value="option2"
-                            disabled
+                            *ngFor="let theme of themes"
+                            [value]="theme"
                         >
-                            Option 2 (disabled)
+                            {{theme}}
                         </mat-option>
-                        <mat-option value="option3">Option 3</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
