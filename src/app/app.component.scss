@@ -30,6 +30,28 @@
       }
     }
   }
+  .buttons{
+    position:fixed;
+    top:4rem;
+    right:4rem;
+    max-width:70rem;
+    display: flex;
+    flex-direction: column;
+    div{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      width: 100%;
+
+    }
+    button{
+      margin-left: 1rem;
+    }
+    .buttons__html, .buttons__clear-all{
+      display: block;
+      text-align: center;
+    }
+  }
 }
 mat-form-field{
   width:100%;
