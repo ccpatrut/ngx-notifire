@@ -193,6 +193,9 @@ export class NotificationService {
    */
   @SetToastType
   success(args: any): NotifireModel {
+    if (!args.config || !args.config.type) {
+      throw new Error('Missing config, please configure service accordingly');
+    }
     return this.create(args);
   }
 

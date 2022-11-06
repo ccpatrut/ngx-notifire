@@ -20,10 +20,10 @@ export class AppComponent implements OnInit {
   themes = ['material', 'dark', 'simple'];
 
   constructor(
-    private readonly fb: FormBuilder,
-    readonly notificationService: NotificationService,
     protected readonly iconRegistry: MatIconRegistry,
-    protected readonly sanitizer: DomSanitizer
+    protected readonly sanitizer: DomSanitizer,
+    readonly notificationService: NotificationService,
+    private readonly fb: FormBuilder
   ) {
     this.positions = Object.keys(NotificationPositionType);
     this.snotifireForm = this.fb.group({
@@ -55,7 +55,16 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {}
 
-  onSuccess() {}
+  onSuccess() {
+    this.notificationService.success('hi', 'we do it here ');
+  }
+
+  protected addIcon(iconName: string, location: string): void {
+    this.iconRegistry.addSvgIcon(
+      iconName,
+      this.sanitizer.bypassSecurityTrustResourceUrl(this.getSvg(location))
+    );
+  }
 
   get positionFormControl(): FormControl | null {
     return this.snotifireForm.get('position') as FormControl;
@@ -64,14 +73,21 @@ export class AppComponent implements OnInit {
   get themeControl(): FormControl | null {
     return this.snotifireForm.get('toastStyle') as FormControl;
   }
-  protected addIcon(iconName: string, location: string): void {
-    this.iconRegistry.addSvgIcon(
-      iconName,
-      this.sanitizer.bypassSecurityTrustResourceUrl(this.getSvg(location))
-    );
+
+  private get toastData(): ToastData {
+    return this.snotifireForm.getRawValue().toastData;
   }
 
   private getSvg(svg: string): string {
     return `assets/${svg}.svg`;
   }
+}
+
+export interface NotificationFormValue {
+  position: NotificationPositionType;
+  toastData: ToastData;
+}
+interface ToastData {
+  title: string;
+  body: string;
 }
