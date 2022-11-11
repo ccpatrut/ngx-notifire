@@ -39,7 +39,7 @@ export class NotificationService {
   create(notif: SnotifireModel): NotifireModel {
     if (this.defaultConfig.type && notif.config && notif.config.type) {
       const config = mergeDeep(
-        this.defaultConfig.toast,
+        this.defaultConfig.snotifireConfig,
         this.defaultConfig.type[notif.config.type],
         notif.config
       );
@@ -493,7 +493,7 @@ export class NotificationService {
       toast.config = mergeDeep(
         toast.config,
         this.defaultConfig.global,
-        this.defaultConfig.toast?.type,
+        this.defaultConfig.snotifireConfig?.type,
         { type },
         next.config
       );

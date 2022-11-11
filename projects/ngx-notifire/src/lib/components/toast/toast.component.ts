@@ -70,8 +70,8 @@ export class ToastComponent implements OnInit, OnDestroy {
   }
   ngAfterContentInit() {
     if (
-      this.service.defaultConfig.toast &&
-      this.service.defaultConfig.toast.animation
+      this.service.defaultConfig.snotifireConfig &&
+      this.service.defaultConfig.snotifireConfig.animation
     ) {
       setTimeout(() => {
         this.stateChanged.emit(SnotifireEventType.BEFORE_SHOW);
@@ -82,7 +82,7 @@ export class ToastComponent implements OnInit, OnDestroy {
           this.toast.config.animation.enter
             ? this.toast.config.animation.enter
             : '';
-      }, this.service.defaultConfig.toast.animation.time / 5); // time to show toast push animation (notifire-toast--in)
+      }, this.service.defaultConfig.snotifireConfig.animation.time / 5); // time to show toast push animation (notifire-toast--in)
     }
   }
   /**

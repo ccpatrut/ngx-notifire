@@ -6,7 +6,7 @@ import { SnotifireConfig } from '../models/snotifire-config.interface';
  */
 export interface NotificationDefaults {
   global?: NotificationGlobalConfig;
-  toast: SnotifireConfig;
+  snotifireConfig?: SnotifireConfig;
   type?: {
     [key: string]: SnotifireConfig;
   };

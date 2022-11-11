@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
         // @ts-ignore
         filterDuplicates: this.visualConfig.isFilterDuplicates,
       },
-      toast: ToastDefaults.toast,
+      snotifireConfig: ToastDefaults.toast,
     });
     return {
       bodyMaxLength: this.functionalConfig.boydMaxLength,
