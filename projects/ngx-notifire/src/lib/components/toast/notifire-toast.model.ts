@@ -1,7 +1,7 @@
 import { Subject, Subscription } from 'rxjs';
-import { NotifireConfig } from '../../models/notification-config.interface';
-import { NotificationEventType } from '../../models/notification-event-type.model';
-import { NotificationType } from '../../models/notification-type.model';
+import { SnotifireConfig } from '../../models/snotifire-config.interface';
+import { SnotifireEventType } from '../../models/snotifire-event.type';
+import { SnotifireType } from '../../models/snotifire.type';
 
 /**
  * Toast main model
@@ -10,7 +10,7 @@ export class NotifireModel {
   /**
    * Emits NotifireEventType
    */
-  readonly eventEmitter = new Subject<NotificationEventType>();
+  readonly eventEmitter = new Subject<SnotifireEventType>();
 
   /**
    * Holds all subscribers because we need to unsubscribe from all before toast get destroyed
@@ -26,12 +26,12 @@ export class NotifireModel {
     public readonly id: number,
     public readonly title: string,
     public readonly body: string,
-    public readonly config: NotifireConfig
+    public readonly config: SnotifireConfig
   ) {
-    if (this.config && this.config.type === NotificationType.PROMPT) {
+    if (this.config && this.config.type === SnotifireType.PROMPT) {
       this.value = '';
     }
-    this.on(NotificationEventType.HIDDEN, () => {
+    this.on(SnotifireEventType.HIDDEN, () => {
       this.eventsHolder.forEach((subscription: Subscription) => {
         subscription.unsubscribe();
       });
@@ -43,9 +43,9 @@ export class NotifireModel {
    * @param event NotificationEventType
    * @param action (toast: this) => void
    */
-  on(event: NotificationEventType, action: (toast: this) => void): this {
+  on(event: SnotifireEventType, action: (toast: this) => void): this {
     this.eventsHolder.push(
-      this.eventEmitter.subscribe((e: NotificationEventType) => {
+      this.eventEmitter.subscribe((e: SnotifireEventType) => {
         if (e === event) {
           action(this);
         }

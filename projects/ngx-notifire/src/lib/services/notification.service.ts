@@ -3,13 +3,9 @@ import { SafeHtml } from '@angular/platform-browser';
 import { from, Observable, Subject, Subscription } from 'rxjs';
 import { SetToastType } from '../decorators/set-toast-type.decorator';
 import { TransformArgument } from '../decorators/transform-argument.decorator';
-import {
-  NotifireConfig,
-  NotificationEventType,
-  NotificationType,
-} from '../models';
+import { SnotifireConfig, SnotifireEventType, SnotifireType } from '../models';
 import { NotificationDefaults } from '../defaults/defaults.interface';
-import { NotificationModel } from '../models/notification.model';
+import { SnotifireModel } from '../models/snotifire.model';
 import { NotifireModel } from '../components/toast/notifire-toast.model';
 import { mergeDeep, uuid } from '../utils';
 import { ToastDefaults } from '../defaults';
@@ -40,7 +36,7 @@ export class NotificationService {
    * @param NotificationModel NotificationModel
    * @return number
    */
-  create(notif: NotificationModel): NotifireModel {
+  create(notif: SnotifireModel): NotifireModel {
     if (this.defaultConfig.type && notif.config && notif.config.type) {
       const config = mergeDeep(
         this.defaultConfig.toast,
@@ -147,7 +143,7 @@ export class NotificationService {
    * @param config NotifireConfig
    * @returns number
    */
-  html(html: string | SafeHtml, config?: NotifireConfig): NotifireModel {
+  html(html: string | SafeHtml, config?: SnotifireConfig): NotifireModel {
     return this.create({
       title: undefined,
       body: undefined,
@@ -176,7 +172,7 @@ export class NotificationService {
    * @param config NotificationConfig
    * @returns number
    */
-  success(body: string, config: NotifireConfig): NotifireModel;
+  success(body: string, config: SnotifireConfig): NotifireModel;
   /**
    * Create toast with success style  returns toast id;
    * @param [body] string
@@ -184,7 +180,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  success(body: string, title: string, config: NotifireConfig): NotifireModel;
+  success(body: string, title: string, config: SnotifireConfig): NotifireModel;
 
   /**
    * Transform toast arguments into NotificationModel object
@@ -220,7 +216,7 @@ export class NotificationService {
    * @param config NotificationConfig
    * @returns number
    */
-  error(body: string, config: NotifireConfig): NotifireModel;
+  error(body: string, config: SnotifireConfig): NotifireModel;
   /**
    * Create toast with error style  returns toast id;
    * @param [body] string
@@ -228,7 +224,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  error(body: string, title: string, config: NotifireConfig): NotifireModel;
+  error(body: string, title: string, config: SnotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -260,7 +256,7 @@ export class NotificationService {
    * @param config NotificationConfig
    * @returns number
    */
-  info(body: string, config: NotifireConfig): NotifireModel;
+  info(body: string, config: SnotifireConfig): NotifireModel;
   /**
    * Create toast with info style  returns toast id;
    * @param [body] string
@@ -268,7 +264,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  info(body: string, title: string, config: NotifireConfig): NotifireModel;
+  info(body: string, title: string, config: SnotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -300,7 +296,7 @@ export class NotificationService {
    * @param config NotificationConfig
    * @returns number
    */
-  warning(body: string, config: NotifireConfig): NotifireModel;
+  warning(body: string, config: SnotifireConfig): NotifireModel;
   /**
    * Create toast with warning style  returns toast id;
    * @param [body] string
@@ -308,7 +304,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  warning(body: string, title: string, config: NotifireConfig): NotifireModel;
+  warning(body: string, title: string, config: SnotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -340,7 +336,7 @@ export class NotificationService {
    * @param config NotificationConfig
    * @returns number
    */
-  confirm(body: string, config: NotifireConfig): NotifireModel;
+  confirm(body: string, config: SnotifireConfig): NotifireModel;
   /**
    * Create toast with confirm style  returns toast id;
    * @param [body] string
@@ -348,7 +344,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  confirm(body: string, title: string, config: NotifireConfig): NotifireModel;
+  confirm(body: string, title: string, config: SnotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -380,7 +376,7 @@ export class NotificationService {
    * @param config NotificationConfig
    * @returns number
    */
-  prompt(body: string, config: NotifireConfig): NotifireModel;
+  prompt(body: string, config: SnotifireConfig): NotifireModel;
   /**
    * Create toast with Prompt style with two buttons, returns toast id;
    * @param [body] string
@@ -388,7 +384,7 @@ export class NotificationService {
    * @param [config] NotificationConfig
    * @returns number
    */
-  prompt(body: string, title: string, config: NotifireConfig): NotifireModel;
+  prompt(body: string, title: string, config: SnotifireConfig): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
    */
@@ -409,7 +405,7 @@ export class NotificationService {
    */
   async(
     body: string,
-    action: Promise<NotificationModel> | Observable<NotificationModel>
+    action: Promise<SnotifireModel> | Observable<SnotifireModel>
   ): NotifireModel;
   /**
    * Creates async toast with Info style. Pass action, and resolve or reject it.
@@ -421,7 +417,7 @@ export class NotificationService {
   async(
     body: string,
     title: string,
-    action: Promise<NotificationModel> | Observable<NotificationModel>
+    action: Promise<SnotifireModel> | Observable<SnotifireModel>
   ): NotifireModel;
   /**
    * Creates async toast with Info style. Pass action, and resolve or reject it.
@@ -432,8 +428,8 @@ export class NotificationService {
    */
   async(
     body: string,
-    action: Promise<NotificationModel> | Observable<NotificationModel>,
-    config: NotifireConfig
+    action: Promise<SnotifireModel> | Observable<SnotifireModel>,
+    config: SnotifireConfig
   ): NotifireModel;
   /**
    * Creates async toast with Info style. Pass action, and resolve or reject it.
@@ -446,8 +442,8 @@ export class NotificationService {
   async(
     body: string,
     title: string,
-    action: Promise<NotificationModel> | Observable<NotificationModel>,
-    config: NotifireConfig
+    action: Promise<SnotifireModel> | Observable<SnotifireModel>,
+    config: SnotifireConfig
   ): NotifireModel;
   /**
    * Transform toast arguments into NotificationModel object
@@ -467,17 +463,17 @@ export class NotificationService {
 
     const toast = this.create(args);
 
-    toast.on(NotificationEventType.MOUNTED, () => {
+    toast.on(SnotifireEventType.MOUNTED, () => {
       const subscription: Subscription = async.subscribe({
-        next: (next?: NotificationModel) => {
+        next: (next?: SnotifireModel) => {
           this.mergeToast(toast, next);
         },
-        error: (error?: NotificationModel) => {
-          this.mergeToast(toast, error, NotificationType.ERROR);
+        error: (error?: SnotifireModel) => {
+          this.mergeToast(toast, error, SnotifireType.ERROR);
           subscription.unsubscribe();
         },
         complete: () => {
-          this.mergeToast(toast, {}, NotificationType.SUCCESS);
+          this.mergeToast(toast, {}, SnotifireType.SUCCESS);
           subscription.unsubscribe();
         },
       });
@@ -486,7 +482,7 @@ export class NotificationService {
     return toast;
   }
 
-  private mergeToast(toast: any, next: any, type?: NotificationType) {
+  private mergeToast(toast: any, next: any, type?: SnotifireType) {
     if (next.body) {
       toast.body = next.body;
     }

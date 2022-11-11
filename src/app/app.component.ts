@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
   NotificationPositionType,
   NotificationService,
-  NotifireConfig,
+  SnotifireConfig,
   ToastDefaults,
 } from 'ngx-notifire';
 
@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
   snotifireForm: FormGroup;
   positions: string[];
   themes = ['material', 'dark', 'simple'];
-  style = 'material';
 
   constructor(
     protected readonly iconRegistry: MatIconRegistry,
@@ -76,8 +75,7 @@ export class AppComponent implements OnInit {
     return this.snotifireForm.get('toastStyle') as FormControl;
   }
 
-  getConfig(): NotifireConfig {
-    console.log(this.snotifireForm.getRawValue());
+  getConfig(): SnotifireConfig {
     this.notificationService.setDefaults({
       global: {
         newOnTop: this.visualConfig.isNewItemsOnTop,

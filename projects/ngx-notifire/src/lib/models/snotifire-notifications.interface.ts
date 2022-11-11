@@ -1,6 +1,6 @@
 import { NotifireModel } from '../components/toast/notifire-toast.model';
 
-export interface NotifireNotifications {
+export interface SnotifireNotifications {
   leftTop?: NotifireModel[];
   leftCenter?: NotifireModel[];
   leftBottom?: NotifireModel[];

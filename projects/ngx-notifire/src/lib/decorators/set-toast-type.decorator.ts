@@ -1,4 +1,4 @@
-import { NotificationModel, NotificationType } from '../models';
+import { SnotifireModel, SnotifireType } from '../models';
 
 /**
  * Defines toast style depending on method name
@@ -14,9 +14,9 @@ export function SetToastType(
 ) {
   return {
     value(...args: any[]) {
-      (args[0] as NotificationModel).config = {
-        ...(args[0] as NotificationModel).config,
-        type: NotificationType[propertyKey as keyof typeof NotificationType],
+      (args[0] as SnotifireModel).config = {
+        ...(args[0] as SnotifireModel).config,
+        type: SnotifireType[propertyKey as keyof typeof SnotifireType],
       };
       return descriptor.value.apply(this, args);
     },

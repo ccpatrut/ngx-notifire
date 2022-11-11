@@ -6,22 +6,22 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { NotificationEventType, NotificationPositionType } from '../../models';
-import { NotifireNotifications } from '../../models/notifire-notifications.interface';
+import { SnotifireEventType, NotificationPositionType } from '../../models';
+import { SnotifireNotifications } from '../../models/snotifire-notifications.interface';
 import { NotifireModel } from '../toast/notifire-toast.model';
 import { NotificationService } from '../../services';
 
 @Component({
-  selector: 'ngx-notifire',
-  templateUrl: './ngx-notifire.component.html',
+  selector: 'ngx-snotifire',
+  templateUrl: './ngx-snotifire.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NgxSnotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly unsubscribe$ = new Subject<void>();
   /**
    * Toasts array
    */
-  notifications!: NotifireNotifications;
+  notifications!: SnotifireNotifications;
   /**
    * Toasts emitter
    */
@@ -99,7 +99,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
         this.notifications = this.splitToasts(
           toasts.slice(this.dockSizeA, this.dockSizeB)
         );
-        this.stateChanged(NotificationEventType.MOUNTED);
+        this.stateChanged(SnotifireEventType.MOUNTED);
       });
   }
 
@@ -108,8 +108,8 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param toasts notifire-toast[]
    * @returns SnotifyNotifications
    */
-  splitToasts(toasts: NotifireModel[]): NotifireNotifications {
-    const result: NotifireNotifications = {};
+  splitToasts(toasts: NotifireModel[]): SnotifireNotifications {
+    const result: SnotifireNotifications = {};
 
     for (const property in NotificationPositionType) {
       if (NotificationPositionType.hasOwnProperty(property)) {
@@ -129,7 +129,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getNotificationArray(
-    notifications: NotifireNotifications,
+    notifications: SnotifireNotifications,
     position: NotificationPositionType
   ): NotifireModel[] | undefined {
     return notifications[position];
@@ -139,7 +139,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
    * Changes the backdrop opacity
    * @param event NotificationEventType
    */
-  stateChanged(event: NotificationEventType) {
+  stateChanged(event: SnotifireEventType) {
     if (!this.withBackdrop.length) {
       if (this.backdrop && this.backdrop >= 0) {
         this.backdrop = -1;

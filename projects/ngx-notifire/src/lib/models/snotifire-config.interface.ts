@@ -1,10 +1,10 @@
 import { SafeHtml } from '@angular/platform-browser';
 import { ButtonsConfig } from '../components/buttons/buttons-config.interface';
-import { NotificationAnimate } from './notification-animate.interface';
-import { NotificationPositionType } from './notification-position-type.model';
-import { NotificationType } from './notification-type.model';
+import { SnotifireAnimate } from './snotifire-animate.interface';
+import { NotificationPositionType } from './snotifire-position.type';
+import { SnotifireType } from './snotifire.type';
 
-export interface NotifireConfig {
+export interface SnotifireConfig {
   /**
    * Notification timeout in milliseconds.
    * Disable timeout = 0
@@ -22,7 +22,7 @@ export interface NotifireConfig {
    * It's not recommended to change it.
    * Depends on toast type.
    */
-  type?: NotificationType;
+  type?: SnotifireType;
 
   /**
    * If the notification should dissapear on click
@@ -73,7 +73,7 @@ export interface NotifireConfig {
   /**
    * Animation config
    */
-  animation?: NotificationAnimate;
+  animation?: SnotifireAnimate;
   /**
    * Html string witch overrides toast content
    */

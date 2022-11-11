@@ -8,7 +8,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { NotificationEventType, NotificationType } from '../../models';
+import { SnotifireEventType, SnotifireType } from '../../models';
 import { NotifireModel } from './notifire-toast.model';
 import { NotificationService } from '../../services';
 
@@ -24,7 +24,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    * Get toast from notifications array
    */
   @Input() toast!: NotifireModel;
-  @Output() stateChanged = new EventEmitter<NotificationEventType>();
+  @Output() stateChanged = new EventEmitter<SnotifireEventType>();
 
   /**
    * requestAnimationFrame id
@@ -39,7 +39,7 @@ export class ToastComponent implements OnInit, OnDestroy {
     progress: 0,
     animation: '',
     isDestroying: false,
-    promptType: NotificationType.PROMPT,
+    promptType: SnotifireType.PROMPT,
   };
 
   constructor(private readonly service: NotificationService) {}
@@ -65,7 +65,7 @@ export class ToastComponent implements OnInit, OnDestroy {
       this.toast.config.showProgressBar = false;
     }
 
-    this.toast.eventEmitter.next(NotificationEventType.MOUNTED);
+    this.toast.eventEmitter.next(SnotifireEventType.MOUNTED);
     this.state.animation = 'notifire-toast--in';
   }
   ngAfterContentInit() {
@@ -74,8 +74,8 @@ export class ToastComponent implements OnInit, OnDestroy {
       this.service.defaultConfig.toast.animation
     ) {
       setTimeout(() => {
-        this.stateChanged.emit(NotificationEventType.BEFORE_SHOW);
-        this.toast.eventEmitter.next(NotificationEventType.BEFORE_SHOW);
+        this.stateChanged.emit(SnotifireEventType.BEFORE_SHOW);
+        this.toast.eventEmitter.next(SnotifireEventType.BEFORE_SHOW);
         this.state.animation =
           this.toast.config &&
           this.toast.config.animation &&
@@ -90,17 +90,17 @@ export class ToastComponent implements OnInit, OnDestroy {
    */
   onRemove() {
     this.state.isDestroying = true;
-    this.toast.eventEmitter.next(NotificationEventType.BEFORE_HIDE);
-    this.stateChanged.emit(NotificationEventType.BEFORE_HIDE);
+    this.toast.eventEmitter.next(SnotifireEventType.BEFORE_HIDE);
+    this.stateChanged.emit(SnotifireEventType.BEFORE_HIDE);
     this.state.animation =
       (this.toast.config &&
         this.toast.config.animation &&
         this.toast.config.animation.exit) ||
       '';
     setTimeout(() => {
-      this.stateChanged.emit(NotificationEventType.HIDDEN);
+      this.stateChanged.emit(SnotifireEventType.HIDDEN);
       this.state.animation = 'notifire-toast--out';
-      this.toast.eventEmitter.next(NotificationEventType.HIDDEN);
+      this.toast.eventEmitter.next(SnotifireEventType.HIDDEN);
       setTimeout(
         () => this.service.remove(this.toast.id, true),
         this.toast.config &&
@@ -113,7 +113,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    * Trigger OnClick lifecycle
    */
   onClick() {
-    this.toast.eventEmitter.next(NotificationEventType.CLICK);
+    this.toast.eventEmitter.next(SnotifireEventType.CLICK);
     if (this.toast && this.toast.config && this.toast.config.closeOnClick) {
       this.service.remove(this.toast.id);
     }
@@ -122,7 +122,7 @@ export class ToastComponent implements OnInit, OnDestroy {
    * Trigger onHoverEnter lifecycle
    */
   onMouseEnter() {
-    this.toast.eventEmitter.next(NotificationEventType.MOUSE_ENTER);
+    this.toast.eventEmitter.next(SnotifireEventType.MOUSE_ENTER);
     if (this.toast && this.toast.config && this.toast.config.pauseOnHover) {
       this.state.paused = true;
     }
@@ -141,7 +141,7 @@ export class ToastComponent implements OnInit, OnDestroy {
       this.state.paused = false;
       this.startTimeout(this.toast.config.timeout * this.state.progress);
     }
-    this.toast.eventEmitter.next(NotificationEventType.MOUSE_LEAVE);
+    this.toast.eventEmitter.next(SnotifireEventType.MOUSE_LEAVE);
   }
   /**
    * Remove toast completely after animation
@@ -151,7 +151,7 @@ export class ToastComponent implements OnInit, OnDestroy {
       return;
     }
     this.initToast();
-    this.toast.eventEmitter.next(NotificationEventType.SHOWN);
+    this.toast.eventEmitter.next(SnotifireEventType.SHOWN);
   }
 
   /*

@@ -4,7 +4,7 @@ import { ToastComponent } from './components/toast/toast.component';
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { CommonModule } from '@angular/common';
 import { KeysPipe, TruncatePipe } from './pipes';
-import { NgxNotifireComponent } from './components/ngx-notifire/ngx-notifire.component';
+import { NgxSnotifireComponent } from './components/ngx-notifire/ngx-snotifire.component';
 import { NotificationService } from './services';
 
 @NgModule({
@@ -13,11 +13,11 @@ import { NotificationService } from './services';
     ToastComponent,
     ButtonsComponent,
     TruncatePipe,
-    NgxNotifireComponent,
+    NgxSnotifireComponent,
     KeysPipe,
   ],
   imports: [CommonModule],
-  exports: [NgxNotifireComponent],
+  exports: [NgxSnotifireComponent],
 })
 export class NgxNotifireModule {
   static forRoot(): ModuleWithProviders<NgxNotifireModule> {

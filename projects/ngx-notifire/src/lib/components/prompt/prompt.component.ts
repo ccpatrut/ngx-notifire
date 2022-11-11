@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { NotificationEventType } from '../../models';
+import { SnotifireEventType } from '../../models';
 import { NotifireModel } from '../toast/notifire-toast.model';
 
 @Component({
@@ -15,7 +15,7 @@ import { NotifireModel } from '../toast/notifire-toast.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class PromptComponent {
-  inputType = NotificationEventType.INPUT;
+  inputType = SnotifireEventType.INPUT;
   /**
    * Get PROMPT placeholder
    */

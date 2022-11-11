@@ -1,4 +1,4 @@
-import { NotifireConfig, NotificationModel, NotificationType } from '../models';
+import { SnotifireConfig, SnotifireModel, SnotifireType } from '../models';
 
 //todo: cp check if async
 /**
@@ -13,7 +13,7 @@ export function TransformArgument(
   propertyKey: string,
   descriptor: PropertyDescriptor
 ) {
-  if (propertyKey === NotificationType.ASYNC) {
+  if (propertyKey === SnotifireType.ASYNC) {
     return {
       value(...args: any[]) {
         let result;

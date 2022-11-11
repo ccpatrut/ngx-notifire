@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxNotifireComponent } from './ngx-notifire.component';
+import { NgxSnotifireComponent } from './ngx-snotifire.component';
 
 describe('NgxNotifireComponent', () => {
-  let component: NgxNotifireComponent;
-  let fixture: ComponentFixture<NgxNotifireComponent>;
+  let component: NgxSnotifireComponent;
+  let fixture: ComponentFixture<NgxSnotifireComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NgxNotifireComponent ]
-    })
-    .compileComponents();
+      declarations: [NgxSnotifireComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxNotifireComponent);
+    fixture = TestBed.createComponent(NgxSnotifireComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

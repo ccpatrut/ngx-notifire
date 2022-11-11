@@ -1,4 +1,4 @@
-export enum NotificationEventType {
+export enum SnotifireEventType {
   MOUNTED = 'mounted',
   BEFORE_SHOW = 'beforeShow',
   SHOWN = 'shown',

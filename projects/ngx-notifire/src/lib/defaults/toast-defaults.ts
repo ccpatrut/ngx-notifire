@@ -1,4 +1,4 @@
-import { NotificationPositionType, NotificationType } from '../models';
+import { NotificationPositionType, SnotifireType } from '../models';
 
 /**
  * Snotify default configuration object
@@ -11,7 +11,7 @@ export const ToastDefaults = {
     filterDuplicates: false,
   },
   toast: {
-    type: NotificationType.INFO,
+    type: SnotifireType.INFO,
     showProgressBar: true,
     timeout: 5000,
     closeOnClick: true,
@@ -26,7 +26,7 @@ export const ToastDefaults = {
     animation: { enter: 'fadeIn', exit: 'fadeOut', time: 400 },
   },
   type: {
-    [NotificationType.PROMPT]: {
+    [SnotifireType.PROMPT]: {
       timeout: 0,
       closeOnClick: false,
       buttons: [
@@ -34,35 +34,35 @@ export const ToastDefaults = {
         { text: 'Cancel', action: null, bold: false },
       ],
       placeholder: 'Enter answer here...',
-      type: NotificationType.PROMPT,
+      type: SnotifireType.PROMPT,
     },
-    [NotificationType.CONFIRM]: {
+    [SnotifireType.CONFIRM]: {
       timeout: 0,
       closeOnClick: false,
       buttons: [
         { text: 'Ok', action: null, bold: true },
         { text: 'Cancel', action: null, bold: false },
       ],
-      type: NotificationType.CONFIRM,
+      type: SnotifireType.CONFIRM,
     },
-    [NotificationType.SUCCESS]: {
-      type: NotificationType.SUCCESS,
+    [SnotifireType.SUCCESS]: {
+      type: SnotifireType.SUCCESS,
     },
-    [NotificationType.ERROR]: {
-      type: NotificationType.ERROR,
+    [SnotifireType.ERROR]: {
+      type: SnotifireType.ERROR,
     },
-    [NotificationType.WARNING]: {
-      type: NotificationType.WARNING,
+    [SnotifireType.WARNING]: {
+      type: SnotifireType.WARNING,
     },
-    [NotificationType.INFO]: {
-      type: NotificationType.INFO,
+    [SnotifireType.INFO]: {
+      type: SnotifireType.INFO,
     },
-    [NotificationType.ASYNC]: {
+    [SnotifireType.ASYNC]: {
       pauseOnHover: false,
       closeOnClick: false,
       timeout: 0,
       showProgressBar: false,
-      type: NotificationType.ASYNC,
+      type: SnotifireType.ASYNC,
     },
   },
 };

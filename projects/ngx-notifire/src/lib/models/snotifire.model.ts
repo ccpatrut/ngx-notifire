@@ -1,10 +1,10 @@
 import { SafeHtml } from '@angular/platform-browser';
-import { NotifireConfig } from './notification-config.interface';
-import { NotificationType } from './notification-type.model';
+import { SnotifireConfig } from './snotifire-config.interface';
+import { SnotifireType } from './snotifire.type';
 
-export class NotificationModel {
+export class SnotifireModel {
   constructor(
-    public type?: NotificationType,
+    public type?: SnotifireType,
     /**
      * Notification Title
      */
@@ -16,7 +16,7 @@ export class NotificationModel {
     /**
      * Config object
      */
-    public config?: NotifireConfig,
+    public config?: SnotifireConfig,
     /**
      * Html content
      */
