@@ -55,6 +55,7 @@ export class NgxNotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {
+    console.log('sssad');
     this.service.emitter
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((toasts: NotifireModel[]) => {

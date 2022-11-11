@@ -156,77 +156,81 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="buttons">
-                <div class="buttons__classic">
-                    <button
-                        mat-raised-button
-                        color="primary"
-                        (click)="onSuccess()"
-                    >
-                        Success
-                    </button>
-                    <button
-                        mat-raised-button
-                        color="info"
-                    >
-                        Info
-                    </button>
-                    <button
-                        mat-raised-button
-                        color="warn"
-                    >
-                        Error
-                    </button>
-                    <button
-                        mat-raised-button
-                        color="primary"
-                    >
-                        Warning
-                    </button>
-                </div>
-                <div class="buttons__special">
-                    <button
-                        mat-raised-button
-                        color="primary"
-                    >
-                        Simple
-                    </button>
-                    <button
-                        mat-raised-button
-                        color="info"
-                    >
-                        Async
-                    </button>
-                    <button
-                        mat-raised-button
-                        color="warn"
-                    >
-                        Confirm
-                    </button>
-                    <button
-                        mat-raised-button
-                        color="primary"
-                    >
-                        Prompt
-                    </button>
-                </div>
-                <div class="buttons__html">
-                    <button
-                        mat-raised-button
-                        color="primary"
-                    >
-                        HTML
-                    </button>
-                </div>
-                <div class="buttons__clear-all">
-                    <button
-                        mat-raised-button
-                        color="primary"
-                    >
-                        Clear all
-                    </button>
-                </div>
-            </div>
+
         </form>
     </div>
+    <div class="buttons">
+        <div class="buttons__classic">
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="onSuccess()"
+            >
+                Success
+            </button>
+            <button
+                mat-raised-button
+                color="info"
+            >
+                Info
+            </button>
+            <button
+                mat-raised-button
+                color="warn"
+            >
+                Error
+            </button>
+            <button
+                mat-raised-button
+                color="primary"
+            >
+                Warning
+            </button>
+        </div>
+        <div class="buttons__special">
+            <button
+                mat-raised-button
+                color="primary"
+            >
+                Simple
+            </button>
+            <button
+                mat-raised-button
+                color="info"
+            >
+                Async
+            </button>
+            <button
+                mat-raised-button
+                color="warn"
+            >
+                Confirm
+            </button>
+            <button
+                mat-raised-button
+                color="primary"
+            >
+                Prompt
+            </button>
+        </div>
+        <div class="buttons__html">
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="onHtml()"
+            >
+                HTML
+            </button>
+        </div>
+        <div class="buttons__clear-all">
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="onClear()"
+            >
+                Clear all
+            </button>
+        </div>
+    </div>
 </section>
+<ngx-notifire class="{{ style }}"></ngx-notifire>

@@ -1,16 +1,13 @@
-import { ThisReceiver } from '@angular/compiler';
 import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { NotificationEventType, NotificationType } from '../../models';
 import { NotifireModel } from './notifire-toast.model';
 import { NotificationService } from '../../services';
@@ -51,6 +48,7 @@ export class ToastComponent implements OnInit, OnDestroy {
     this.service.toastChanged
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((toast: NotifireModel) => {
+        console.log('toast');
         if (this.toast.id === toast.id) {
           this.initToast();
         }

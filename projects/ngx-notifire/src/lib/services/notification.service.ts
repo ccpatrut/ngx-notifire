@@ -12,6 +12,7 @@ import { NotificationDefaults } from '../defaults/defaults.interface';
 import { NotificationModel } from '../models/notification.model';
 import { NotifireModel } from '../components/toast/notifire-toast.model';
 import { mergeDeep, uuid } from '../utils';
+import { ToastDefaults } from '../defaults';
 
 @Injectable()
 export class NotificationService {
@@ -55,11 +56,12 @@ export class NotificationService {
       this.add(toast);
       return toast;
     }
+    console.log('s');
     const defaulToast = new NotifireModel(
       uuid(),
       notif.title ? notif.title : '',
       notif.body ? notif.body : '',
-      this.defaultConfig.toast
+      ToastDefaults.toast
     );
     this.add(defaulToast);
     return defaulToast;
@@ -109,7 +111,7 @@ export class NotificationService {
       this.defaultConfig.global.filterDuplicates &&
       this.containsToast(toast)
     ) {
-      return;
+      throw new Error('missing global config');
     }
     if (
       this.defaultConfig &&
@@ -193,7 +195,7 @@ export class NotificationService {
    */
   @SetToastType
   success(args: any): NotifireModel {
-    if (!args.config || !args.config.type) {
+    if (!args.config) {
       throw new Error('Missing config, please configure service accordingly');
     }
     return this.create(args);

@@ -2,6 +2,10 @@
 .page{
   padding-top:2rem;
   padding-bottom: 1rem;
+  justify-content: center;
+  align-content: center;
+
+  display: flex;
   .config{
     max-width: 40rem;
     padding: 0rem 3rem;
@@ -31,12 +35,12 @@
     }
   }
   .buttons{
-    position:fixed;
-    top:4rem;
-    right:4rem;
+
     max-width:70rem;
     display: flex;
     flex-direction: column;
+    margin-top:4.5rem;
+    margin-left: 10rem;
     div{
       display: flex;
       justify-content: space-between;

@@ -7,7 +7,12 @@ import {
 } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NotificationPositionType, NotificationService } from 'ngx-notifire';
+import {
+  NotificationPositionType,
+  NotificationService,
+  NotifireConfig,
+  ToastDefaults,
+} from 'ngx-notifire';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +23,7 @@ export class AppComponent implements OnInit {
   snotifireForm: FormGroup;
   positions: string[];
   themes = ['material', 'dark', 'simple'];
+  style = 'material';
 
   constructor(
     protected readonly iconRegistry: MatIconRegistry,
@@ -55,10 +61,6 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {}
 
-  onSuccess() {
-    this.notificationService.success('hi', 'we do it here ');
-  }
-
   protected addIcon(iconName: string, location: string): void {
     this.iconRegistry.addSvgIcon(
       iconName,
@@ -74,8 +76,83 @@ export class AppComponent implements OnInit {
     return this.snotifireForm.get('toastStyle') as FormControl;
   }
 
+  getConfig(): NotifireConfig {
+    console.log(this.snotifireForm.getRawValue());
+    this.notificationService.setDefaults({
+      global: {
+        newOnTop: this.visualConfig.isNewItemsOnTop,
+        maxAtPosition: this.notificationConfig.maxAtPosition,
+        maxOnScreen: this.notificationConfig.maxOnScreen,
+        // @ts-ignore
+        filterDuplicates: this.visualConfig.isFilterDuplicates,
+      },
+      toast: ToastDefaults.toast,
+    });
+    return {
+      bodyMaxLength: this.functionalConfig.boydMaxLength,
+      titleMaxLength: this.functionalConfig.titleMaxLengt,
+
+      backdrop: this.functionalConfig.backdrop,
+      position: this.snotifireForm.getRawValue().position,
+      timeout: this.functionalConfig.timeout,
+      showProgressBar: this.visualConfig.isShowProgressBar,
+      closeOnClick: this.visualConfig.isCloseOnClick,
+      pauseOnHover: this.visualConfig.isPauseOnHover,
+    };
+  }
+
+  onSuccess() {
+    this.notificationService.success(
+      this.toastData.body,
+      this.toastData.title,
+      this.getConfig()
+    );
+  }
+  onInfo() {
+    this.notificationService.info(
+      this.toastData.body,
+      this.toastData.title,
+      this.getConfig()
+    );
+  }
+  onError() {
+    this.notificationService.error(
+      this.toastData.body,
+      this.toastData.title,
+      this.getConfig()
+    );
+  }
+  onWarning() {
+    this.notificationService.warning(
+      this.toastData.body,
+      this.toastData.title,
+      this.getConfig()
+    );
+  }
+
+  onHtml() {
+    const html = `<div class="snotifyToast__title"><b>Html Bold Title</b></div>
+    <div class="snotifyToast__body"><i>Html</i> <b>toast</b> <u>content</u></div>`;
+    this.notificationService.html(html, this.getConfig());
+  }
+
+  onClear() {
+    this.notificationService.clear();
+  }
+
+  private get functionalConfig(): FunctionalConfig {
+    return this.snotifireForm.getRawValue().toastFunctionalConfig;
+  }
+
+  private get visualConfig(): VisualConfig {
+    return this.snotifireForm.getRawValue().toastVisualConfig;
+  }
   private get toastData(): ToastData {
     return this.snotifireForm.getRawValue().toastData;
+  }
+
+  private get notificationConfig(): NotificationConfig {
+    return this.snotifireForm.getRawValue().notificationConf;
   }
 
   private getSvg(svg: string): string {
@@ -90,4 +167,22 @@ export interface NotificationFormValue {
 interface ToastData {
   title: string;
   body: string;
+}
+interface FunctionalConfig {
+  titleMaxLengt: number;
+  boydMaxLength: number;
+  timeout: number;
+  backdrop: number;
+}
+interface NotificationConfig {
+  maxOnScreen: number;
+  maxAtPosition: number;
+}
+
+interface VisualConfig {
+  isShowProgressBar: boolean;
+  isCloseOnClick: boolean;
+  isPauseOnHover: boolean;
+  isNewItemsOnTop: boolean;
+  isFilterDuplicates: boolean;
 }
