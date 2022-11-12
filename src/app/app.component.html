@@ -195,18 +195,21 @@
             <button
                 mat-raised-button
                 color="info"
+                (click)="onAsyncLoading()"
             >
                 Async
             </button>
             <button
                 mat-raised-button
                 color="warn"
+                (click)="onConfirmation()"
             >
                 Confirm
             </button>
             <button
                 mat-raised-button
                 color="primary"
+                (click)="onPrompt()"
             >
                 Prompt
             </button>
@@ -231,4 +234,4 @@
         </div>
     </div>
 </section>
-<ngx-snotifire class="{{ themes[0] }}"></ngx-snotifire>
+<ngx-snotifire class="{{ snotifireForm.getRawValue().toastStyle }}"></ngx-snotifire>

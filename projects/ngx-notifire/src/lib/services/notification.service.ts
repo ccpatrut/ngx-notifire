@@ -107,7 +107,10 @@ export class NotificationService {
       this.defaultConfig.global.filterDuplicates &&
       this.containsToast(toast)
     ) {
-      throw new Error('missing global config');
+      if (!this.defaultConfig.global.filterDuplicates) {
+        throw new Error('Missing global config');
+      }
+      return;
     }
     if (
       this.defaultConfig &&

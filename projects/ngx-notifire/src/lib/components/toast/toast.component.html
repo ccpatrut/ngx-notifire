@@ -6,7 +6,7 @@
         [ngClass]="[
   'notifire-toast animated',
   'snotify-' + toast.config.type,
-  state.animation
+  state.animation,  toast.valid === undefined ? '' : toast.valid ? 'snotifyToast--valid' : 'snotifyToast--invalid'
 ]"
         [ngStyle]="{
   '-webkit-transition': toast.config.animation && toast.config.animation.time  + 'ms',
@@ -45,11 +45,11 @@
             >
                 {{ toast.body | truncate: toast.config.bodyMaxLength }}
             </div>
-            <notifire-button
+            <ngx-snotify-prompt
                 *ngIf="toast.config.type === state.promptType"
                 [toast]="toast"
             >
-            </notifire-button>
+            </ngx-snotify-prompt>
             <div
                 *ngIf="!toast.config.icon; else elseBlock"
                 [ngClass]="['snotify-icon', toast.config.iconClass || 'snotify-icon--' + toast.config.type]"

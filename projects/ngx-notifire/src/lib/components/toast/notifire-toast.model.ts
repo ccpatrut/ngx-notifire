@@ -22,6 +22,11 @@ export class NotifireModel {
    */
   value?: string;
 
+  /**
+   * Toast validator
+   */
+  valid: boolean = true;
+
   constructor(
     public readonly id: number,
     public readonly title: string,

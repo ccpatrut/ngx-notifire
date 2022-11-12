@@ -9,7 +9,7 @@ import { SnotifireEventType } from '../../models';
 import { NotifireModel } from '../toast/notifire-toast.model';
 
 @Component({
-  selector: 'lib-prompt',
+  selector: 'ngx-snotify-prompt',
   templateUrl: './prompt.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

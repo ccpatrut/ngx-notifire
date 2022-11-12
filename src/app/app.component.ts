@@ -11,8 +11,11 @@ import {
   NotificationPositionType,
   NotificationService,
   SnotifireConfig,
+  SnotifireEventType,
+  SnotifireModel,
   ToastDefaults,
 } from 'ngx-notifire';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -136,6 +139,141 @@ export class AppComponent implements OnInit {
 
   onClear() {
     this.notificationService.clear();
+  }
+
+  onAsyncLoading() {
+    const errorAction = new Observable<SnotifireModel>((observer) => {
+      setTimeout(() => {
+        observer.error({
+          title: 'Error',
+          body: 'Example. Error 404. Service not found',
+        });
+      }, 2000);
+    });
+
+    const successAction = new Observable<SnotifireModel>((observer) => {
+      setTimeout(() => {
+        observer.next({
+          body: 'Still loading.....',
+        });
+      }, 2000);
+
+      setTimeout(() => {
+        observer.next({
+          title: 'Success',
+          body: 'Example. Data loaded!',
+          config: {
+            closeOnClick: true,
+            timeout: 5000,
+            showProgressBar: true,
+          },
+        });
+        observer.complete();
+      }, 5000);
+    });
+    /*
+      You should pass Promise or Observable of type Snotify to change some data or do some other actions
+      More information how to work with observables:
+      https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/create.md
+     */
+    const { timeout, ...config } = this.getConfig(); // Omit timeout
+    this.notificationService.async(
+      'This will resolve with error',
+      'Async',
+      errorAction,
+      config
+    );
+    this.notificationService.async(
+      'This will resolve with success',
+      successAction,
+      config
+    );
+    this.notificationService.async(
+      'Called with promise',
+      'Error async',
+      new Promise((resolve, reject) => {
+        setTimeout(
+          () =>
+            reject({
+              title: 'Error!!!',
+              body: 'We got an example error!',
+              config: {
+                closeOnClick: true,
+              },
+            }),
+          1000
+        );
+        setTimeout(() => resolve({}), 1500);
+      }),
+      config
+    );
+  }
+
+  onConfirmation() {
+    /*
+    Here we pass an buttons array, which contains of 2 element of type SnotifyButton
+     */
+    const { timeout, closeOnClick, ...config } = this.getConfig(); // Omit props what i don't need
+    this.notificationService.confirm(
+      this.toastData.body,
+      this.toastData.title,
+      {
+        ...config,
+        buttons: [
+          {
+            text: 'Yes',
+            action: () => console.log('Clicked: Yes'),
+            bold: false,
+          },
+          { text: 'No', action: () => console.log('Clicked: No') },
+          {
+            text: 'Later',
+            action: (toast) => {
+              console.log('Clicked: Later');
+              this.notificationService.remove(toast.id);
+            },
+          },
+          {
+            text: 'Close',
+            action: (toast) => {
+              console.log('Clicked: Close');
+              this.notificationService.remove(toast.id);
+            },
+            bold: true,
+          },
+        ],
+      }
+    );
+  }
+
+  onPrompt() {
+    /*
+     Here we pass an buttons array, which contains of 2 element of type SnotifyButton
+     At the action of the first buttons we can get what user entered into input field.
+     At the second we can't get it. But we can remove this toast
+     */
+    const { timeout, closeOnClick, ...config } = this.getConfig(); // Omit props what i don't need
+    this.notificationService
+      .prompt(this.toastData.body, this.toastData.title, {
+        ...config,
+        buttons: [
+          {
+            text: 'Yes',
+            action: (toast) => console.log('Said Yes: ' + toast.value),
+          },
+          {
+            text: 'No',
+            action: (toast) => {
+              console.log('Said No: ' + toast.value);
+              this.notificationService.remove(toast.id);
+            },
+          },
+        ],
+        placeholder: 'Enter "ng-snotify" to validate this input', // Max-length = 40
+      })
+      .on(SnotifireEventType.INPUT, (toast) => {
+        console.log(toast.value);
+      });
   }
 
   private get functionalConfig(): FunctionalConfig {

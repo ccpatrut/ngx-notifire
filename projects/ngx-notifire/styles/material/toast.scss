@@ -213,7 +213,7 @@ $snotify-body-font-size: auto !default;
 
 .snotify-prompt {
   background-color: $prompt-bg;
-  ng-snotify-prompt {
+ ngx-snotify-prompt {
     width: 100%;
   }
   .notifire-toast__title {

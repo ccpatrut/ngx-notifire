@@ -130,7 +130,7 @@ $snotify-body-font-size: auto !default;
 
 .snotify-prompt {
   border-left: $border-width solid $prompt-border-color;
-  ng-snotify-prompt {
+ ngx-snotify-prompt {
     width: 100%;
   }
 }
