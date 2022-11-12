@@ -1,4 +1,10 @@
 <div
+    class="snotifire-backdrop"
+    *ngIf="backdrop && backdrop >= 0"
+    [style.opacity]="backdrop"
+></div>
+
+<div
     *ngFor="let position of notifications | keys"
     class="snotify snotify-{{ position }}"
 >
