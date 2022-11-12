@@ -52,12 +52,12 @@ export class NotificationService {
       this.add(toast);
       return toast;
     }
-    console.log('s');
+    const config = mergeDeep(this.defaultConfig.snotifireConfig, notif.config);
     const defaulToast = new NotifireModel(
       uuid(),
       notif.title ? notif.title : '',
       notif.body ? notif.body : '',
-      ToastDefaults.toast
+      config
     );
     this.add(defaulToast);
     return defaulToast;

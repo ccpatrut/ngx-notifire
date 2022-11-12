@@ -55,7 +55,6 @@ export class NgxSnotifireComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {
-    console.log('sssad');
     this.service.emitter
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((toasts: NotifireModel[]) => {
@@ -122,9 +121,17 @@ export class NgxSnotifireComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     toasts.forEach((toast: NotifireModel) => {
-      result[toast.config?.position as NotificationPositionType]?.push(toast);
+      if (toast.config.position) {
+        const keyIndex = Object.keys(NotificationPositionType).indexOf(
+          toast.config.position
+        );
+        const searchedString = Object.values(NotificationPositionType)[
+          keyIndex
+        ];
+        result[searchedString]?.push(toast);
+      }
     });
-
+    console.log(result);
     return result;
   }
 

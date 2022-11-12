@@ -16,7 +16,7 @@ export function SetToastType(
     value(...args: any[]) {
       (args[0] as SnotifireModel).config = {
         ...(args[0] as SnotifireModel).config,
-        type: SnotifireType[propertyKey as keyof typeof SnotifireType],
+        type: propertyKey as SnotifireType,
       };
       return descriptor.value.apply(this, args);
     },
